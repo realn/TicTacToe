@@ -1,0 +1,4 @@
+[submodule "CB"]
+	path = CB
+	url = D:/Projekty/TicTacToe/CB
+	branch = master
