@@ -34,13 +34,20 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Build.props" />
+    <Import Project="..\Globals.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Build.props" />
+    <Import Project="..\Globals.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>$(CB_EXT_BIN);$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(CB_CORE_DIR)Common\Include\;$(CB_INTERFS_DIR)WindowDrvInterface\Include;$(CB_EXT_INC);$(IncludePath)</IncludePath>
+    <LibraryPath>$(CB_EXT_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -76,6 +83,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CB\Core\Common\Common.vcxproj">
+      <Project>{844b7ab6-f789-496c-86d2-fc71e8328f23}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\CB\Interfaces\WindowDrvInterface\WindowDrvInterface.vcxproj">
+      <Project>{ec070743-297f-4414-9e71-f107ebdb5057}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
