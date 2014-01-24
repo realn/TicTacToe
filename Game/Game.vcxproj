@@ -46,7 +46,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>$(CB_EXT_BIN);$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(CB_CORE_DIR)Common\Include\;$(CB_INTERFS_DIR)WindowDrvInterface\Include;$(CB_EXT_INC);$(IncludePath)</IncludePath>
+    <IncludePath>$(CB_CORE_DIR)Common\Include\;$(CB_INTERFS_DIR)WindowDrvInterface\Include;$(CB_INTERFS_DIR)GraphicDrvInterface\Include;$(CB_EXT_INC);$(IncludePath)</IncludePath>
     <LibraryPath>$(CB_EXT_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -83,23 +83,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CB\Core\Common\Common.vcxproj">
       <Project>{844b7ab6-f789-496c-86d2-fc71e8328f23}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\CB\Interfaces\GraphicDrvInterface\GraphicDrvInterface.vcxproj">
+      <Project>{1894c896-bb26-4993-b035-7885af9f507e}</Project>
     </ProjectReference>
     <ProjectReference Include="..\CB\Interfaces\WindowDrvInterface\WindowDrvInterface.vcxproj">
       <Project>{ec070743-297f-4414-9e71-f107ebdb5057}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="GameResult.h" />
-    <ClInclude Include="DriverManager.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\GameResult.h" />
+    <ClInclude Include="Source\DriverManager.h" />
+    <ClInclude Include="Source\Game.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\pointer.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

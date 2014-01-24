@@ -4,30 +4,38 @@
     <Filter Include="Source">
       <UniqueIdentifier>{6c0ad1f4-deb4-4ffd-b880-0cc1ec28400a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{886c59b5-52a7-4a81-8ac4-31d7ec3f1d62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Source\Application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="Source\Game.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Source\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
+    <ClInclude Include="Source\Application.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Source\DriverManager.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="DriverManager.h">
+    <ClInclude Include="Source\Game.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="GameResult.h">
+    <ClInclude Include="Source\GameResult.h">
       <Filter>Source</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\pointer.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

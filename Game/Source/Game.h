@@ -15,6 +15,8 @@ namespace T3{
 		GameState	m_State;
 		CB::CRefPtr<CB::Window::IManager>	m_pWindowManager;
 		CB::CRefPtr<CB::Window::IWindow>	m_pMainWindow;
+		CB::CRefPtr<CB::Graphic::IManager>	m_pGraphicManager;
+		CB::CRefPtr<CB::Graphic::IDevice>	m_pGraphicDevice;
 
 	public:
 		CGame(const CB::CString& strCmdLine, IDriverManager& DriverManager);
@@ -23,5 +25,8 @@ namespace T3{
 		const GameResult	MainLoop();
 
 		const bool	WindowClose(CB::CRefPtr<CB::Window::IWindow> pWindow);
+
+	private:
+		void	Render();
 	};
 }

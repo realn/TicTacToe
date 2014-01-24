@@ -57,9 +57,14 @@ namespace T3{
 
 	void	CApplication::LoadDrivers(){
 		this->m_pWindowDriver = CB::Window::LoadDriver(L"MSWindowDriver");
+		this->m_pGraphicDriver = CB::Graphic::LoadDriver(L"OGLGraphicDriver");
 	}
 
 	CB::CRefPtr<CB::Window::IManager>	CApplication::CreateWindowManager(){
 		return this->m_pWindowDriver->CreateManager();
+	}
+
+	CB::CRefPtr<CB::Graphic::IManager>	CApplication::CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager){
+		return this->m_pGraphicDriver->CreateManager(pWindowManager);
 	}
 }

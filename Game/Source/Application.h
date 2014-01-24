@@ -17,6 +17,7 @@ namespace T3{
 
 		CB::CRefPtr<CB::Log::CLogger>		m_pLogger;
 		CB::CRefPtr<CB::Window::IDriver>	m_pWindowDriver;
+		CB::CRefPtr<CB::Graphic::IDriver>	m_pGraphicDriver;
 
 	public:
 		CApplication(const CB::CString& strCmdLine);
@@ -25,6 +26,7 @@ namespace T3{
 		const int32	Run();
 
 		CB::CRefPtr<CB::Window::IManager>	CreateWindowManager() override;
+		CB::CRefPtr<CB::Graphic::IManager>	CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager) override;
 
 	private:
 		void	InitializeLogger();
