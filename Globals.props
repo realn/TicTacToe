@@ -11,6 +11,7 @@
     <CB_EXT_INC>$(CB_EXT_DIR)Include\</CB_EXT_INC>
     <CB_EXT_LIB>$(CB_EXT_DIR)Lib\</CB_EXT_LIB>
     <CB_EXT_BIN>$(CB_EXT_DIR)runtime\</CB_EXT_BIN>
+    <CB_ENV_SET>Path=$(Path);$(CB_WORKAREA_DIR);$(CB_EXT_BIN);</CB_ENV_SET>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>GameGlobals</_PropertySheetDisplayName>
@@ -51,6 +52,10 @@
     </BuildMacro>
     <BuildMacro Include="CB_EXT_BIN">
       <Value>$(CB_EXT_BIN)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CB_ENV_SET">
+      <Value>$(CB_ENV_SET)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>
