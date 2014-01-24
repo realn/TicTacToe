@@ -9,5 +9,25 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GameResult.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
 [submodule "CB"]
 	path = CB
-	url = D:/Projekty/CodeBox
+	url = https://github.com/realn/CodeBox.git
 	branch = master
