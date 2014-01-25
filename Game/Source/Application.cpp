@@ -3,11 +3,26 @@
 
 #include <IO_File.h>
 #include <MessageBox.h>
+#include <CBStringEx.h>
 
 namespace T3{
-	CApplication::CApplication(const CB::CString& strCmdLine) :
-		m_strCmdLine(strCmdLine)
-	{
+	CApplication::CApplication(const CB::CString& strCmdLine){
+		CompileCmdLineArgs(strCmdLine, this->m_strCmdArgs);
+		
+		uint32 uIndex = 0;
+		if(CB::Collection::TryFind(this->m_strCmdArgs, CB::CString(L"-config"), uIndex) && uIndex + 1 < this->m_strCmdArgs.GetLength()){
+			this->m_strConfigPath = this->m_strCmdArgs[uIndex + 1];
+		}
+		else{
+			this->m_strConfigPath = L"config.xml";
+		}
+
+		this->LoadConfig();
+
+		if(strCmdLine.Find(L"-debug")){
+			this->m_Config.DebugMode = true;
+		}
+
 		this->InitializeLogger();
 		this->LoadDrivers();
 	}
@@ -19,7 +34,7 @@ namespace T3{
 		try{
 			GameResult result;
 			do{
-				CGame	game(this->m_strCmdLine, *this);
+				CGame	game(this->m_strCmdArgs, this->m_Config, *this);
 
 				result = game.MainLoop();
 				switch (result)
@@ -44,13 +59,27 @@ namespace T3{
 		return 0;
 	}
 
+	CB::CRefPtr<CB::Window::IManager>	CApplication::CreateWindowManager(){
+		return this->m_pWindowDriver->CreateManager();
+	}
+
+	CB::CRefPtr<CB::Graphic::IManager>	CApplication::CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager){
+		return this->m_pGraphicDriver->CreateManager(pWindowManager);
+	}
+
+	void	CApplication::LoadConfig(){
+	}
+	
+	void	CApplication::SaveConfig(){
+	}
+
 	void	CApplication::InitializeLogger(){
 		this->m_pLogger = CB::Log::CLogger::GetInstance();
 
 		auto pFileStream = CB::IO::File::Open(L"main.log", CB::IO::File::AccessType::WriteOnly, CB::IO::File::OpenAction::AlwaysCreate);
 		this->m_pLogger->AddStream(pFileStream.Cast<CB::IO::IStream>());
 
-		if(this->m_strCmdLine.Find(L"-debug")){
+		if(this->m_Config.DebugMode){
 			this->m_pLogger->SetDebugMode(true);
 		}
 	}
@@ -60,11 +89,32 @@ namespace T3{
 		this->m_pGraphicDriver = CB::Graphic::LoadDriver(L"OGLGraphicDriver");
 	}
 
-	CB::CRefPtr<CB::Window::IManager>	CApplication::CreateWindowManager(){
-		return this->m_pWindowDriver->CreateManager();
-	}
+	void	CApplication::CompileCmdLineArgs(const CB::CString& strCmdLine, CB::Collection::CList<CB::CString>& cmdArgsOut){
+		CB::Collection::CList<CB::CString> whiteList;
+		whiteList.Add(L" ");
+		whiteList.Add(L"\t");
 
-	CB::CRefPtr<CB::Graphic::IManager>	CApplication::CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager){
-		return this->m_pGraphicDriver->CreateManager(pWindowManager);
+		uint32 uEndPos = 0;
+		uint32 uStartPos = 0;
+		CB::CString strValue;
+		while(CB::String::FindNot(strCmdLine, whiteList, uEndPos, uStartPos)){
+			if(strCmdLine[uStartPos] == L'\"'){
+				uStartPos++;
+				if(strCmdLine.Find(L"\"", uStartPos + 1, uEndPos)){
+					strValue = strCmdLine.SubStringIndexed(uStartPos, uEndPos);
+					uEndPos++;
+				}
+				else{
+					return;
+				}
+			}
+			else{
+				if(!CB::String::Find(strCmdLine, whiteList, uStartPos, uEndPos)){
+					uEndPos = strCmdLine.GetLength();
+				}
+				strValue = strCmdLine.SubStringIndexed(uStartPos, uEndPos);
+			}
+			cmdArgsOut.Add(strValue);
+		}
 	}
 }

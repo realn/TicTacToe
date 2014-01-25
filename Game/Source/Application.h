@@ -7,13 +7,16 @@
 
 #include "DriverManager.h"
 #include "GameResult.h"
+#include "GameConfig.h"
 
 namespace T3{
 	class CApplication : 
 		public IDriverManager
 	{
 	private:
-		const CB::CString	m_strCmdLine;
+		CB::Collection::CList<CB::CString>	m_strCmdArgs;
+		CB::CString		m_strConfigPath;
+		CGameConfig		m_Config;
 
 		CB::CRefPtr<CB::Log::CLogger>		m_pLogger;
 		CB::CRefPtr<CB::Window::IDriver>	m_pWindowDriver;
@@ -29,7 +32,11 @@ namespace T3{
 		CB::CRefPtr<CB::Graphic::IManager>	CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager) override;
 
 	private:
+		void	LoadConfig();
+		void	SaveConfig();
 		void	InitializeLogger();
 		void	LoadDrivers();
+
+		static void	CompileCmdLineArgs(const CB::CString& strCmdLine, CB::Collection::CList<CB::CString>& cmdArgsOut);
 	};
 }

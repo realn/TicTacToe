@@ -3,18 +3,24 @@
 #include <Signals_Method.h>
 
 namespace T3{
-	CGame::CGame(const CB::CString& strCmdLine, IDriverManager& driverManager) :
-		m_State(GameState::MainMenu)
+	CGame::CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameConfig& Config, IDriverManager& driverManager) :
+		m_State(GameState::MainMenu),
+		m_Config(Config)
 	{
+		uint32 uIndex = 0;
+		if(CB::Collection::TryFind(strArgs, CB::CString(L"-assets"), uIndex) && uIndex + 1 < strArgs.GetLength()){
+			this->m_Config.AssetsDir = strArgs[uIndex + 1];
+		}
+
 		this->m_pWindowManager = driverManager.CreateWindowManager();
-		this->m_pMainWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single);
+		this->m_pMainWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single, this->m_Config.Resolution, this->m_Config.WindowPosition);
 		this->m_pMainWindow->OnClose += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
 
 		this->m_pGraphicManager = driverManager.CreateGraphicManager(this->m_pWindowManager);
 
 		CB::Graphic::CDeviceDesc desc(
 			this->m_pMainWindow, 
-			CB::Graphic::CDisplayMode(this->m_pMainWindow->GetSize(), 60, CB::Graphic::BufferFormat::R8G8B8A8),
+			CB::Graphic::CDisplayMode(this->m_Config.Resolution, 60, CB::Graphic::BufferFormat::R8G8B8A8),
 			CB::Graphic::BufferFormat::D24S8,
 			false
 			);
