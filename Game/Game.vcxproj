@@ -86,7 +86,9 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
+    <ClCompile Include="Source\GameCursor.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +112,7 @@
     <ClInclude Include="Source\GameResult.h" />
     <ClInclude Include="Source\DriverManager.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>

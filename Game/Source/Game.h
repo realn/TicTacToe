@@ -7,6 +7,7 @@
 #include "GameResult.h"
 #include "GameConfig.h"
 #include "TextureManager.h"
+#include "ShaderManager.h"
 
 namespace T3{
 	enum class GameState{
@@ -25,7 +26,7 @@ namespace T3{
 		CB::CRefPtr<CB::Graphic::IDevice>	m_pGraphicDevice;
 
 		CB::CAutoPtr<CTextureManager>	m_pTextureManager;
-
+		CB::CAutoPtr<CShaderManager>	m_pShaderManager;
 
 	public:
 		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameConfig& Config, IDriverManager& DriverManager);

@@ -37,7 +37,10 @@ namespace T3{
 			return this->m_pDefaultTexture;
 		}
 
-		return this->LoadTexture(strFilename);
+		pTexture = this->LoadTexture(strFilename);
+		this->m_pTextureList.Add(strAssetName, pTexture);
+
+		return pTexture;
 	}
 
 	void	CTextureManager::PurgeUnused(){

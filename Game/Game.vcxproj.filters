@@ -24,6 +24,12 @@
     <ClCompile Include="Source\TextureManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ShaderManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameCursor.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -45,6 +51,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameCursor.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderManager.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
