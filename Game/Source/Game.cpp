@@ -90,6 +90,13 @@ namespace T3{
 		this->m_pIBuffer = this->m_pGraphicDevice->CreateBuffer(CB::Graphic::BufferType::Index, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, inds);
 
 		this->m_pPointer = this->m_pTextureManager->Load(L"pointer");
+
+		CB::Graphic::CBlendStateDesc blendDesc(true, 
+			CB::Graphic::CBlendInstDesc(CB::Graphic::BlendOption::SourceAlpha, CB::Graphic::BlendOperation::Add, CB::Graphic::BlendOption::OneMinusSourceAlpha),
+			CB::Graphic::CBlendInstDesc(CB::Graphic::BlendOption::SourceAlpha, CB::Graphic::BlendOperation::Add, CB::Graphic::BlendOption::OneMinusSourceAlpha),
+			0xFF
+			);
+		this->m_pBlendState = this->m_pGraphicDevice->CreateState(blendDesc);
 	}
 
 	CGame::~CGame(){
@@ -124,18 +131,20 @@ namespace T3{
 
 		CB::Math::CMatrix	mModel = CB::Math::CMatrix::GetIdentity();
 		CB::Math::CMatrix	mView = CB::Math::CMatrix::GetTranslation(0.0f, 0.0f, -1.0f);
-		CB::Math::CMatrix	mProj = CB::Math::CMatrix::GetOrtho(4.0f, 4.0f, -1.0f, 1.0f);
-
-		this->m_pVShader->SetUniform(L"mModelViewProj", mModel * mView * mProj);
-		this->m_pFragment->SetSampler(L"texBase", this->m_pPointer.Cast<CB::Graphic::IBaseTexture>());
+		CB::Math::CMatrix	mProj = CB::Math::CMatrix::GetOrtho(4.0f, 4.0f, -2.0f, 2.0f);
 
 		this->m_pGraphicDevice->SetShader(this->m_pVShader);
 		this->m_pGraphicDevice->SetShader(this->m_pFragment);
+
+		this->m_pVShader->SetUniform(L"mModelViewProj", mModel * mView * mProj);
+		this->m_pFragment->SetSampler(L"texBase", this->m_pPointer.Cast<CB::Graphic::IBaseTexture>());
 
 		this->m_pGraphicDevice->SetVertexDeclaration(this->m_pVDecl);
 		this->m_pGraphicDevice->SetVertexBuffer(0, this->m_pVBuffer);
 		this->m_pGraphicDevice->SetVertexBuffer(1, this->m_pTBuffer);
 		this->m_pGraphicDevice->SetIndexBuffer(this->m_pIBuffer);
+
+		this->m_pGraphicDevice->SetState(this->m_pBlendState.Cast<CB::Graphic::IDeviceState>());
 
 		this->m_pGraphicDevice->RenderIndexed(2);
 

@@ -104,6 +104,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GameCursor.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameResult.h" />

@@ -84,7 +84,11 @@ namespace T3{
 		img.GetPixels(data);
 
 		try{
-			return this->m_pDevice->CreateTexture2D(img.GetSize(), CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, CB::Graphic::BufferFormat::B8G8R8A8, uInputFormat, data);
+			return this->m_pDevice->CreateTexture2D(img.GetSize(), 
+				CB::Graphic::BufferUsage::Static, 
+				CB::Graphic::BufferAccess::Write, 
+				CB::Graphic::BufferFormat::R8G8B8A8, 
+				uInputFormat, data);
 		}
 		catch(CB::Exception::CException& Exception){
 			CB::Log::Write(Exception);

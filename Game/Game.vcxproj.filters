@@ -44,6 +44,9 @@
     <ClInclude Include="Source\TextureManager.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameCursor.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\pointer.png">
