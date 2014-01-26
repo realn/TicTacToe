@@ -46,7 +46,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>$(CB_EXT_BIN);$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(CB_CORE_DIR)Common\Include\;$(CB_INTERFS_DIR)WindowDrvInterface\Include;$(CB_INTERFS_DIR)GraphicDrvInterface\Include;$(CB_EXT_INC);$(IncludePath)</IncludePath>
+    <IncludePath>$(CB_CORE_DIR)Common\Include\;$(CB_INTERFS_DIR)WindowDrvInterface\Include;$(CB_INTERFS_DIR)GraphicDrvInterface\Include;$(CB_TOOLS_DIR)GraphicTools\Include;$(CB_EXT_INC);$(IncludePath)</IncludePath>
     <LibraryPath>$(CB_EXT_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -87,6 +87,7 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CB\Core\Common\Common.vcxproj">
@@ -98,6 +99,9 @@
     <ProjectReference Include="..\CB\Interfaces\WindowDrvInterface\WindowDrvInterface.vcxproj">
       <Project>{ec070743-297f-4414-9e71-f107ebdb5057}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\CB\Tools\GraphicTools\GraphicTools.vcxproj">
+      <Project>{fda5d238-2b64-48f2-aeb4-50299fd0b05e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
@@ -105,9 +109,13 @@
     <ClInclude Include="Source\GameResult.h" />
     <ClInclude Include="Source\DriverManager.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\pointer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\BasicShader.cg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -90,7 +90,7 @@ namespace T3{
 	}
 
 	void	CApplication::CompileCmdLineArgs(const CB::CString& strCmdLine, CB::Collection::CList<CB::CString>& cmdArgsOut){
-		CB::Collection::CList<CB::CString> whiteList;
+		CB::Collection::CStringList whiteList;
 		whiteList.Add(L" ");
 		whiteList.Add(L"\t");
 

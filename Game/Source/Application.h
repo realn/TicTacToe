@@ -4,6 +4,7 @@
 #include <CBString.h>
 #include <Logger.h>
 #include <Timer.h>
+#include <CBStringEx.h>
 
 #include "DriverManager.h"
 #include "GameResult.h"
@@ -14,7 +15,7 @@ namespace T3{
 		public IDriverManager
 	{
 	private:
-		CB::Collection::CList<CB::CString>	m_strCmdArgs;
+		CB::Collection::CStringList	m_strCmdArgs;
 		CB::CString		m_strConfigPath;
 		CGameConfig		m_Config;
 
