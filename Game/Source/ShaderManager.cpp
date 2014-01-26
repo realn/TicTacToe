@@ -79,8 +79,8 @@ namespace T3{
 		CB::CString strMain;
 		switch (uType)
 		{
-		case CB::Graphic::ShaderType::Vertex:	strMain = VERTEX_SHADER_MAIN;
-		case CB::Graphic::ShaderType::Fragment:	strMain = FRAGMENT_SHADER_MAIN;
+		case CB::Graphic::ShaderType::Vertex:	strMain = VERTEX_SHADER_MAIN;	break;
+		case CB::Graphic::ShaderType::Fragment:	strMain = FRAGMENT_SHADER_MAIN;	break;
 		default:
 			CR_THROW(CB::String::Format(L"Unknown shader type {0}.", CB::String::ToString(uType)));
 		}

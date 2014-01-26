@@ -116,6 +116,7 @@
     <ClInclude Include="Source\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Invalid.png" />
     <Image Include="Assets\pointer.png" />
   </ItemGroup>
   <ItemGroup>

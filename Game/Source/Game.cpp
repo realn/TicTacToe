@@ -19,6 +19,7 @@ namespace T3{
 		this->m_pWindowManager = driverManager.CreateWindowManager();
 		this->m_pMainWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single, this->m_Config.Resolution, this->m_Config.WindowPosition);
 		this->m_pMainWindow->OnClose += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
+		this->m_pMainWindow->OnMouseMove += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
 
 		this->m_pGraphicManager = driverManager.CreateGraphicManager(this->m_pWindowManager);
 
@@ -41,12 +42,15 @@ namespace T3{
 		this->m_pTextureManager = new CTextureManager(m_pGraphicDevice, this->m_Config.AssetsDir);
 		this->m_pShaderManager = new CShaderManager(this->m_pGraphicDevice, this->m_Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2);
 		
+		this->m_pCursor = new CGameCursor(this->m_pGraphicDevice, this->m_pMainWindow->GetSize(), *this->m_pTextureManager, *this->m_pShaderManager);
+
 		this->m_pMainWindow->SetVisible(true);
 
 	}
 
 	CGame::~CGame(){
 		this->m_pMainWindow->OnClose -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
+		this->m_pMainWindow->OnMouseMove -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
 	}
 
 	const GameResult	CGame::MainLoop(){
@@ -71,10 +75,17 @@ namespace T3{
 		return true;
 	}
 
+	const bool	CGame::WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position){
+		this->m_pCursor->SetPos(Position);
+
+		return true;
+	}
+
 	void	CGame::Render(){
 		this->m_pGraphicDevice->Clear(CB::Math::CColor(0.5f, 0.6f, 0.3f));
 		this->m_pGraphicDevice->BeginRender();
 
+		this->m_pCursor->Render(this->m_pGraphicDevice);
 
 		this->m_pGraphicDevice->EndRender();
 	}

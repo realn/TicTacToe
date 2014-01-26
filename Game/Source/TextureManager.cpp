@@ -34,6 +34,7 @@ namespace T3{
 		CB::Log::Write(L"Texture load: " + strAssetName);
 		CB::CString strFilename;
 		if(!this->FindFile(strAssetName, strFilename)){
+			CB::Log::Write(L"Asset not found, returning default.");
 			return this->m_pDefaultTexture;
 		}
 
@@ -67,6 +68,7 @@ namespace T3{
 		CB::IO::CImage img;
 
 		img.ReadFromStream(pStream);
+		img.Convert(CB::IO::Image::BitFormat::f32Bit);
 
 		CB::Graphic::BufferFormat uInputFormat;
 		switch (img.GetColorFormat())

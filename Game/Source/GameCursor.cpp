@@ -43,7 +43,6 @@ namespace T3{
 		this->m_pTBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Vertex, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, tcoords);
 		this->m_pIBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Index, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, inds);
 
-
 		CB::Graphic::CBlendStateDesc blendDesc(true, 
 			CB::Graphic::CBlendInstDesc(CB::Graphic::BlendOption::SourceAlpha, CB::Graphic::BlendOperation::Add, CB::Graphic::BlendOption::OneMinusSourceAlpha),
 			CB::Graphic::CBlendInstDesc(CB::Graphic::BlendOption::SourceAlpha, CB::Graphic::BlendOperation::Add, CB::Graphic::BlendOption::OneMinusSourceAlpha),
@@ -62,18 +61,18 @@ namespace T3{
 		CB::Math::CMatrix	mView = CB::Math::CMatrix::GetTranslation(0.0f, 0.0f, -1.0f);
 		CB::Math::CMatrix	mProj = CB::Math::CMatrix::GetOrtho(4.0f, 4.0f, -2.0f, 2.0f);
 
-		pDevice->SetShader(this->m_pVShader);
-		pDevice->SetShader(this->m_pFragment);
-
 		this->m_pVShader->SetUniform(L"mModelViewProj", mModel * mView * mProj);
 		this->m_pFragment->SetSampler(L"texBase", this->m_pPointer.Cast<CB::Graphic::IBaseTexture>());
+
+		pDevice->SetShader(this->m_pVShader);
+		pDevice->SetShader(this->m_pFragment);
 
 		pDevice->SetVertexDeclaration(this->m_pVDecl);
 		pDevice->SetVertexBuffer(0, this->m_pVBuffer);
 		pDevice->SetVertexBuffer(1, this->m_pTBuffer);
 		pDevice->SetIndexBuffer(this->m_pIBuffer);
 
-		pDevice->SetState(this->m_pBlendState.Cast<CB::Graphic::IDeviceState>());
+		//pDevice->SetState(this->m_pBlendState.Cast<CB::Graphic::IDeviceState>());
 
 		pDevice->RenderIndexed(2);
 	}

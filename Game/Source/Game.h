@@ -8,6 +8,7 @@
 #include "GameConfig.h"
 #include "TextureManager.h"
 #include "ShaderManager.h"
+#include "GameCursor.h"
 
 namespace T3{
 	enum class GameState{
@@ -27,6 +28,7 @@ namespace T3{
 
 		CB::CAutoPtr<CTextureManager>	m_pTextureManager;
 		CB::CAutoPtr<CShaderManager>	m_pShaderManager;
+		CB::CAutoPtr<CGameCursor>		m_pCursor;
 
 	public:
 		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameConfig& Config, IDriverManager& DriverManager);
@@ -35,6 +37,7 @@ namespace T3{
 		const GameResult	MainLoop();
 
 		const bool	WindowClose(CB::CRefPtr<CB::Window::IWindow> pWindow);
+		const bool	WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position);
 
 	private:
 		void	Render();

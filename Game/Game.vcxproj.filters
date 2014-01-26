@@ -61,6 +61,9 @@
     <Image Include="Assets\pointer.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\Invalid.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BasicShader.cg">
