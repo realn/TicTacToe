@@ -38,10 +38,17 @@ namespace T3{
 			return this->m_pDefaultTexture;
 		}
 
-		pTexture = this->LoadTexture(strFilename);
-		this->m_pTextureList.Add(strAssetName, pTexture);
+		try{
+			pTexture = this->LoadTexture(strFilename);
+			this->m_pTextureList.Add(strAssetName, pTexture);
 
-		return pTexture;
+			return pTexture;
+		}
+		catch(CB::Exception::CException& Exception){
+			CB::Log::Write(Exception);
+			CB::Log::Write(L"Texture load of " + strFilename + L" failed. Returning default.");
+			return this->m_pDefaultTexture;
+		}
 	}
 
 	void	CTextureManager::PurgeUnused(){
@@ -88,17 +95,10 @@ namespace T3{
 		CB::Collection::CList<byte> data;
 		img.GetPixels(data);
 
-		try{
-			return this->m_pDevice->CreateTexture2D(img.GetSize(), 
-				CB::Graphic::BufferUsage::Static, 
-				CB::Graphic::BufferAccess::Write, 
-				CB::Graphic::BufferFormat::R8G8B8A8, 
-				uInputFormat, data);
-		}
-		catch(CB::Exception::CException& Exception){
-			CB::Log::Write(Exception);
-			CB::Log::Write(L"Texture load of " + strPath + L" failed. Returning default.");
-			return this->m_pDefaultTexture;
-		}
+		return this->m_pDevice->CreateTexture2D(img.GetSize(), 
+			CB::Graphic::BufferUsage::Static, 
+			CB::Graphic::BufferAccess::Write, 
+			CB::Graphic::BufferFormat::R8G8B8A8, 
+			uInputFormat, data);
 	}
 }

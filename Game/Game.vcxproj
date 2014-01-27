@@ -87,6 +87,7 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameCursor.cpp" />
+    <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
@@ -106,6 +107,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\GameCursor.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\GameConfig.h" />

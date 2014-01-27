@@ -30,6 +30,9 @@
     <ClCompile Include="Source\GameCursor.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Level.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -54,6 +57,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
