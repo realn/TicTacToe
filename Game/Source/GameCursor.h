@@ -24,6 +24,7 @@ namespace T3{
 
 		CB::Math::CPoint	m_CursorPos;
 		CB::Math::CSize		m_SreenSize;
+		CB::Math::CSize		m_CursorSize;
 
 	public:
 		CGameCursor(CB::CRefPtr<CB::Graphic::IDevice> pDevice, const CB::Math::CSize& ScreenSize, CTextureManager& TexMgr, CShaderManager& ShaderMng);

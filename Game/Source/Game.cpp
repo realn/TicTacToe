@@ -45,7 +45,7 @@ namespace T3{
 		this->m_pCursor = new CGameCursor(this->m_pGraphicDevice, this->m_pMainWindow->GetSize(), *this->m_pTextureManager, *this->m_pShaderManager);
 
 		this->m_pMainWindow->SetVisible(true);
-
+		this->m_pWindowManager->SetCursorVisible(false);
 	}
 
 	CGame::~CGame(){
