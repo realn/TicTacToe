@@ -9,6 +9,7 @@
 #include "TextureManager.h"
 #include "ShaderManager.h"
 #include "GameCursor.h"
+#include "Level.h"
 
 namespace T3{
 	enum class GameState{
@@ -29,6 +30,7 @@ namespace T3{
 		CB::CAutoPtr<CTextureManager>	m_pTextureManager;
 		CB::CAutoPtr<CShaderManager>	m_pShaderManager;
 		CB::CAutoPtr<CGameCursor>		m_pCursor;
+		CB::CAutoPtr<CLevel>			m_pLevel;
 
 	public:
 		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameConfig& Config, IDriverManager& DriverManager);

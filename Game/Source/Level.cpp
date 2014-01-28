@@ -59,6 +59,8 @@ namespace T3{
 		this->m_pVertexBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Vertex, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, verts);
 		this->m_pTCoordBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Vertex, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, tcoords);
 		this->m_pIndexBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Index, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, idxs);
+
+		this->m_mModel = CB::Math::CMatrix::GetIdentity();
 	}
 
 	void	CLevel::Update(const float32 fTD){
@@ -66,9 +68,34 @@ namespace T3{
 
 	void	CLevel::Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice){
 		auto mView = CB::Math::CMatrix::GetIdentity();
-		auto mProj = CB::Math::CMatrix::GetOrtho(6.0f, 6.0f, -1.0f, 4.0f);
+		auto mProj = CB::Math::CMatrix::GetOrtho(0.0f, 6.4f, 0.0f, 4.8f, -1.0f, 4.0f);
 
-		this->m_pVertexShader->SetUniform(L"mModelViewProj", mView * mProj);
+		pDevice->SetShader(this->m_pVertexShader);
+		pDevice->SetShader(this->m_pFragmentShader);
 
+		this->m_pVertexShader->SetUniform(L"mModelViewProj", mProj * mView * this->m_mModel);
+		this->m_pFragmentShader->SetSampler(L"texBase", this->m_pFrame.Cast<CB::Graphic::IBaseTexture>());
+
+		pDevice->SetVertexDeclaration(this->m_pDeclaration);
+		pDevice->SetVertexBuffer(0, this->m_pVertexBuffer);
+		pDevice->SetVertexBuffer(1, this->m_pTCoordBuffer);
+		pDevice->SetIndexBuffer(this->m_pIndexBuffer);
+
+		for(uint32 y = 0; y < FIELD_SIZE_Y; y++){
+			for(uint32 x = 0; x < FIELD_SIZE_X; x++){
+				mView = CB::Math::CMatrix::GetTranslation(CB::Math::CVector3D(this->m_vFieldSize * CB::Math::CVector2D((float32)x, (float32)y), 0.0f));
+				this->m_pVertexShader->SetUniform(L"mModelViewProj", mProj * mView * this->m_mModel);
+				pDevice->RenderIndexed(2);
+			}
+		}
+
+	}
+
+	void	CLevel::SetModelMatrix(const CB::Math::CMatrix& mModel){
+		this->m_mModel = mModel;
+	}
+
+	void	CLevel::SetMousePos(const CB::Math::CVector2D& vPosition){
+		
 	}
 }

@@ -44,6 +44,8 @@ namespace T3{
 		
 		this->m_pCursor = new CGameCursor(this->m_pGraphicDevice, this->m_pMainWindow->GetSize(), *this->m_pTextureManager, *this->m_pShaderManager);
 
+		this->m_pLevel = new CLevel(this->m_pGraphicDevice, CB::Math::CVector2D(4.0f, 4.0f), *this->m_pTextureManager, *this->m_pShaderManager); 
+
 		this->m_pMainWindow->SetVisible(true);
 		this->m_pWindowManager->SetCursorVisible(false);
 	}
@@ -85,6 +87,7 @@ namespace T3{
 		this->m_pGraphicDevice->Clear(CB::Math::CColor(0.5f, 0.6f, 0.3f));
 		this->m_pGraphicDevice->BeginRender();
 
+		this->m_pLevel->Render(this->m_pGraphicDevice);
 		this->m_pCursor->Render(this->m_pGraphicDevice);
 
 		this->m_pGraphicDevice->EndRender();
