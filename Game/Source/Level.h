@@ -24,6 +24,7 @@ namespace T3{
 
 		CB::Math::CMatrix	m_mModel;
 		CB::Math::CVector2D	m_vSize;
+		CB::Math::CVector2D m_vFieldSize;
 		CB::Collection::CArray<CField, 9>	m_Fields;
 
 		CB::CRefPtr<CB::Graphic::IShader>	m_pVertexShader;
