@@ -64,6 +64,8 @@ namespace T3{
 			timer.Update();
 			this->m_pWindowManager->ProcessEvents();
 
+			this->Update(timer.GetTimeDelta());
+
 			this->m_pGraphicDevice->Swap();
 		}
 		while(this->m_State != GameState::Shutdown);
@@ -79,6 +81,12 @@ namespace T3{
 
 	const bool	CGame::WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position){
 		this->m_pCursor->SetPos(Position);
+		
+		auto posNorm = CB::Math::CVector2D(Position) / CB::Math::CVector2D(this->m_pMainWindow->GetSize().ToPoint());
+		posNorm.Y = 1.0f - posNorm.Y;
+		auto posLevel = posNorm * CB::Math::CVector2D(6.4f, 4.8f);
+
+		this->m_pLevel->SetMousePos(posLevel);
 
 		return true;
 	}
@@ -91,5 +99,9 @@ namespace T3{
 		this->m_pCursor->Render(this->m_pGraphicDevice);
 
 		this->m_pGraphicDevice->EndRender();
+	}
+
+	void	CGame::Update(const float32 fTD){
+		this->m_pLevel->Update(fTD);
 	}
 }

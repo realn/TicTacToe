@@ -43,5 +43,6 @@ namespace T3{
 
 	private:
 		void	Render();
+		void	Update(const float32 fTD);
 	};
 }

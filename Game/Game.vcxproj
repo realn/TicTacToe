@@ -114,15 +114,20 @@
     <ClInclude Include="Source\GameResult.h" />
     <ClInclude Include="Source\DriverManager.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\LevelMesh.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\circle.png" />
+    <Image Include="Assets\cross.png" />
+    <Image Include="Assets\frame.png" />
     <Image Include="Assets\Invalid.png" />
     <Image Include="Assets\pointer.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BasicShader.cg" />
+    <None Include="Assets\GridShader.cg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

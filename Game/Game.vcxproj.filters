@@ -7,6 +7,9 @@
     <Filter Include="Assets">
       <UniqueIdentifier>{886c59b5-52a7-4a81-8ac4-31d7ec3f1d62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Level">
+      <UniqueIdentifier>{728eedf0-7bc3-4976-b34e-a9956c6ba43d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -62,6 +65,9 @@
     <ClInclude Include="Source\Level.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\LevelMesh.h">
+      <Filter>Source\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\pointer.png">
@@ -70,9 +76,21 @@
     <Image Include="Assets\Invalid.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\circle.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\cross.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\frame.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BasicShader.cg">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\GridShader.cg">
       <Filter>Assets</Filter>
     </None>
   </ItemGroup>
