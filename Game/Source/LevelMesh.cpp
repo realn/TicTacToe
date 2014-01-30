@@ -17,8 +17,9 @@ namespace T3{
 		for(uint32 i = 0; i < Field.GetLength(); i++){
 			Field[i].AddToList(verts);
 		}
-
-		this->m_pBuffer->LoadSubData(verts, 0);
+		if(Field.GetLength() > 0){
+			this->m_pBuffer->LoadSubData(verts, 0);
+		}
 		this->m_uNumberOfPolygons = Field.GetLength() * 2;
 	}
 

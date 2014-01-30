@@ -50,6 +50,6 @@ namespace T3{
 		void	SetModelMatrix(const CB::Math::CMatrix& mModel);
 		void	SetMousePos(const CB::Math::CVector2D& vPosition);
 
-		void	PutField(const CB::Math::CVector2D vPosition, const FieldType uType);
+		void	PutField(const CB::Math::CVector2D& vPosition, const FieldType uType);
 	};
 }

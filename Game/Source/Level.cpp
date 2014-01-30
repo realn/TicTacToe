@@ -25,6 +25,7 @@ namespace T3{
 				CField& field = this->m_Fields[uIndex];
 
 				field.uIndex = uIndex;
+				field.bHover = false;
 				field.Rect.Position = this->m_vFieldSize * CB::Math::CVector2D((float32)x, (float32)y);
 				field.Rect.Size = this->m_vFieldSize;
 			}
@@ -68,6 +69,7 @@ namespace T3{
 
 	void	CLevel::Update(const float32 fTD){
 		CB::Collection::CList<CLevelFieldMesh> fields;
+		CB::Collection::CList<CLevelFieldMesh> crossFields;
 	
 		uint16 uIndex = 0;
 		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
@@ -84,9 +86,25 @@ namespace T3{
 
 				fields.Add(mesh);
 			}
+
+			switch (field.Type)
+			{
+			case FieldType::Cross:
+				{
+					CLevelFieldMesh mesh;
+					mesh.SetRect(field.Rect);
+					mesh.SetAlpha(1.0f);
+					crossFields.Add(mesh);
+				}
+				break;
+
+			default:
+				break;
+			}
 		}
 
 		this->m_Grid.Set(fields);
+		this->m_Cross.Set(crossFields);
 	}
 
 	void	CLevel::Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice){
@@ -108,6 +126,12 @@ namespace T3{
 			pDevice->SetVertexBuffer(0, this->m_Grid.GetBuffer());
 			pDevice->RenderIndexed(this->m_Grid.GetNumberOfPolygons());
 		}
+		if(this->m_Cross.GetNumberOfPolygons() > 0){
+			this->m_pFragmentShader->SetSampler(L"texBase", this->m_Cross.GetTexture());
+
+			pDevice->SetVertexBuffer(0, this->m_Cross.GetBuffer());
+			pDevice->RenderIndexed(this->m_Cross.GetNumberOfPolygons());
+		}
 
 		pDevice->FreeVertexDeclaration();
 		pDevice->FreeIndexBuffer();
@@ -126,6 +150,16 @@ namespace T3{
 			CField& field = this->m_Fields[i];
 
 			field.bHover = field.Rect.Contains(vPosition);
+		}
+	}
+
+	void	CLevel::PutField(const CB::Math::CVector2D& vPosition, const CLevel::FieldType uType){
+		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
+			CField& field = this->m_Fields[i];
+
+			if(field.Rect.Contains(vPosition)){
+				field.Type = FieldType::Cross;
+			}
 		}
 	}
 }

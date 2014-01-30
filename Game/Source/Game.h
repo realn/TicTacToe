@@ -22,6 +22,8 @@ namespace T3{
 	private:
 		GameState	m_State;
 		CGameConfig	m_Config;
+		CB::Math::CVector2D	m_vLevelMousePos;
+
 		CB::CRefPtr<CB::Window::IManager>	m_pWindowManager;
 		CB::CRefPtr<CB::Window::IWindow>	m_pMainWindow;
 		CB::CRefPtr<CB::Graphic::IManager>	m_pGraphicManager;
@@ -40,6 +42,7 @@ namespace T3{
 
 		const bool	WindowClose(CB::CRefPtr<CB::Window::IWindow> pWindow);
 		const bool	WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position);
+		const bool	WindowMouseDown(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey uKey);
 
 	private:
 		void	Render();

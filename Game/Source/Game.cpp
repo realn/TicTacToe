@@ -18,8 +18,10 @@ namespace T3{
 
 		this->m_pWindowManager = driverManager.CreateWindowManager();
 		this->m_pMainWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single, this->m_Config.Resolution, this->m_Config.WindowPosition);
+		
 		this->m_pMainWindow->OnClose += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
 		this->m_pMainWindow->OnMouseMove += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
+		this->m_pMainWindow->OnMouseButtonDown += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Window::VirtualKey>(this, &CGame::WindowMouseDown);
 
 		this->m_pGraphicManager = driverManager.CreateGraphicManager(this->m_pWindowManager);
 
@@ -51,8 +53,12 @@ namespace T3{
 	}
 
 	CGame::~CGame(){
-		this->m_pMainWindow->OnClose -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
-		this->m_pMainWindow->OnMouseMove -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
+		this->m_pMainWindow->OnClose.Clear(this);
+		this->m_pMainWindow->OnMouseMove.Clear(this);
+		this->m_pMainWindow->OnMouseButtonDown.Clear(this);
+		//this->m_pMainWindow->OnClose -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
+		//this->m_pMainWindow->OnMouseMove -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
+		//this->m_pMainWindow->OnMouseButtonDown -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Window::VirtualKey>(this, &CGame::WindowMouseDown);
 	}
 
 	const GameResult	CGame::MainLoop(){
@@ -87,7 +93,15 @@ namespace T3{
 		auto posLevel = posNorm * CB::Math::CVector2D(6.4f, 4.8f);
 
 		this->m_pLevel->SetMousePos(posLevel);
+		this->m_vLevelMousePos = posLevel;
 
+		return true;
+	}
+
+	const bool	CGame::WindowMouseDown(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey Button){
+		if(Button == CB::Window::VirtualKey::LBUTTON){
+			this->m_pLevel->PutField(this->m_vLevelMousePos, CLevel::FieldType::Cross);
+		}
 		return true;
 	}
 
