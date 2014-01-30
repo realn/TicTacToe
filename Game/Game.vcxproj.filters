@@ -36,6 +36,12 @@
     <ClCompile Include="Source\Level.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LevelFieldMesh.cpp">
+      <Filter>Source\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LevelMesh.cpp">
+      <Filter>Source\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -66,6 +72,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\LevelMesh.h">
+      <Filter>Source\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelFieldMesh.h">
       <Filter>Source\Level</Filter>
     </ClInclude>
   </ItemGroup>

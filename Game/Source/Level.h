@@ -2,6 +2,7 @@
 
 #include <GraphicDriver.h>
 #include <Math_RectangleF.h>
+#include "LevelMesh.h"
 #include "TextureManager.h"
 #include "ShaderManager.h"
 
@@ -28,7 +29,6 @@ namespace T3{
 		CB::Math::CVector2D	m_vSize;
 		CB::Math::CVector2D m_vFieldSize;
 		CB::Collection::CArray<CField, 9>	m_Fields;
-		uint32	m_uNumberOfGridTris;
 
 		CB::CRefPtr<CB::Graphic::IShader>	m_pVertexShader;
 		CB::CRefPtr<CB::Graphic::IShader>	m_pFragmentShader;
@@ -37,13 +37,9 @@ namespace T3{
 		CB::CRefPtr<CB::Graphic::IBuffer>	m_pTCoordBuffer;
 		CB::CRefPtr<CB::Graphic::IBuffer>	m_pIndexBuffer;
 
-		CB::CRefPtr<CB::Graphic::IBuffer>	m_pGridVertexBuffer;
-		CB::CRefPtr<CB::Graphic::IBuffer>	m_pCrossVertexBuffer;
-		CB::CRefPtr<CB::Graphic::IBuffer>	m_pCircleVertexBuffer;
-
-		CB::CRefPtr<CB::Graphic::ITexture2D>	m_pCircle;
-		CB::CRefPtr<CB::Graphic::ITexture2D>	m_pCross;
-		CB::CRefPtr<CB::Graphic::ITexture2D>	m_pFrame;
+		CLevelMesh	m_Grid;
+		CLevelMesh	m_Cross;
+		CLevelMesh	m_Circle;
 
 	public:
 		CLevel(CB::CRefPtr<CB::Graphic::IDevice> pDevice, const CB::Math::CVector2D& vSize, CTextureManager& TexMng, CShaderManager& ShdMng);

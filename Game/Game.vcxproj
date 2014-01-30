@@ -88,6 +88,8 @@
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameCursor.cpp" />
     <ClCompile Include="Source\Level.cpp" />
+    <ClCompile Include="Source\LevelFieldMesh.cpp" />
+    <ClCompile Include="Source\LevelMesh.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
@@ -114,6 +116,7 @@
     <ClInclude Include="Source\GameResult.h" />
     <ClInclude Include="Source\DriverManager.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\LevelFieldMesh.h" />
     <ClInclude Include="Source\LevelMesh.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\TextureManager.h" />
