@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Game.h"
+#include "GameEnv.h"
 
 #include <IO_File.h>
 #include <MessageBox.h>
@@ -19,6 +20,10 @@ namespace T3{
 
 		this->LoadConfig();
 
+		if(CB::Collection::TryFind(m_strCmdArgs, CB::CString(L"-assets"), uIndex) && uIndex + 1 < m_strCmdArgs.GetLength()){
+			this->m_Config.AssetsDir = this->m_strCmdArgs[uIndex + 1];
+		}
+
 		if(strCmdLine.Find(L"-debug")){
 			this->m_Config.DebugMode = true;
 		}
@@ -34,7 +39,8 @@ namespace T3{
 		try{
 			GameResult result;
 			do{
-				CGame	game(this->m_strCmdArgs, this->m_Config, *this);
+				CGameEnv	env(*this, this->m_Config);
+				CGame		game(this->m_strCmdArgs, env, this->m_Config);
 
 				result = game.MainLoop();
 				switch (result)
@@ -59,12 +65,12 @@ namespace T3{
 		return 0;
 	}
 
-	CB::CRefPtr<CB::Window::IManager>	CApplication::CreateWindowManager(){
-		return this->m_pWindowDriver->CreateManager();
+	CB::CRefPtr<CB::Window::IDriver>	CApplication::GetWindowDriver() const{
+		return this->m_pWindowDriver;
 	}
 
-	CB::CRefPtr<CB::Graphic::IManager>	CApplication::CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager){
-		return this->m_pGraphicDriver->CreateManager(pWindowManager);
+	CB::CRefPtr<CB::Graphic::IDriver>	CApplication::GetGraphicDriver() const{
+		return this->m_pGraphicDriver;
 	}
 
 	void	CApplication::LoadConfig(){

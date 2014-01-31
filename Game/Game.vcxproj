@@ -87,6 +87,7 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameCursor.cpp" />
+    <ClCompile Include="Source\GameEnv.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LevelFieldMesh.cpp" />
     <ClCompile Include="Source\LevelMesh.cpp" />
@@ -109,12 +110,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GameEnv.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\GameCursor.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\GameConfig.h" />
     <ClInclude Include="Source\GameResult.h" />
-    <ClInclude Include="Source\DriverManager.h" />
+    <ClInclude Include="Source\DriverContainer.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\LevelFieldMesh.h" />
     <ClInclude Include="Source\LevelMesh.h" />

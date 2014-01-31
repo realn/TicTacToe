@@ -7,58 +7,33 @@
 #include <IO_TextReader.h>
 
 namespace T3{
-	CGame::CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameConfig& Config, IDriverManager& driverManager) :
+	CGame::CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameEnv& Env, CGameConfig& Config) :
 		m_State(GameState::MainMenu),
-		m_Config(Config)
+		m_Env(Env),
+		m_Config(Config),
+		m_TextureManager(Env.GetDevice(), Config.AssetsDir),
+		m_ShaderManager(Env.GetDevice(), Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2)
 	{
-		uint32 uIndex = 0;
-		if(CB::Collection::TryFind(strArgs, CB::CString(L"-assets"), uIndex) && uIndex + 1 < strArgs.GetLength()){
-			this->m_Config.AssetsDir = strArgs[uIndex + 1];
+
+		{
+			auto pWindow = this->m_Env.GetWindow();
+
+			pWindow->OnClose += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
 		}
 
-		this->m_pWindowManager = driverManager.CreateWindowManager();
-		this->m_pMainWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single, this->m_Config.Resolution, this->m_Config.WindowPosition);
+		this->m_Env.OnMouseMove += CB::Signals::CMethod<CGame, void, const CB::Math::CVector2D&>(this, &CGame::EventMouseMove);
+		this->m_Env.OnMouseDown += CB::Signals::CMethod<CGame, void, const CB::Math::CVector2D&, const CB::Window::VirtualKey>(this, &CGame::EventMouseDown);
 		
-		this->m_pMainWindow->OnClose += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
-		this->m_pMainWindow->OnMouseMove += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
-		this->m_pMainWindow->OnMouseButtonDown += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Window::VirtualKey>(this, &CGame::WindowMouseDown);
+		this->m_pCursor = new CGameCursor(this->m_Env.GetDevice(), this->m_Config.Resolution, this->m_TextureManager, this->m_ShaderManager);
 
-		this->m_pGraphicManager = driverManager.CreateGraphicManager(this->m_pWindowManager);
-
-		CB::Graphic::CDeviceDesc desc(
-			this->m_pMainWindow, 
-			CB::Graphic::CDisplayMode(this->m_Config.Resolution, 60, CB::Graphic::BufferFormat::R8G8B8A8),
-			CB::Graphic::BufferFormat::D24S8,
-			false
-			);
-
-		CB::Collection::CArray<CB::Graphic::FeatureLevel, 1> level;
-		level[0] = CB::Graphic::FeatureLevel::Level_1;
-
-		this->m_pGraphicDevice = this->m_pGraphicManager->GetDefaultAdapter()->CreateDevice(
-			this->m_pMainWindow,
-			desc,
-			level
-			);
-
-		this->m_pTextureManager = new CTextureManager(m_pGraphicDevice, this->m_Config.AssetsDir);
-		this->m_pShaderManager = new CShaderManager(this->m_pGraphicDevice, this->m_Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2);
-		
-		this->m_pCursor = new CGameCursor(this->m_pGraphicDevice, this->m_pMainWindow->GetSize(), *this->m_pTextureManager, *this->m_pShaderManager);
-
-		this->m_pLevel = new CLevel(this->m_pGraphicDevice, CB::Math::CVector2D(4.0f, 4.0f), *this->m_pTextureManager, *this->m_pShaderManager); 
-
-		this->m_pMainWindow->SetVisible(true);
-		this->m_pWindowManager->SetCursorVisible(false);
+		this->m_pLevel = new CLevel(this->m_Env.GetDevice(), CB::Math::CVector2D(4.0f, 4.0f), this->m_TextureManager, this->m_ShaderManager); 
 	}
 
 	CGame::~CGame(){
-		this->m_pMainWindow->OnClose.Clear(this);
-		this->m_pMainWindow->OnMouseMove.Clear(this);
-		this->m_pMainWindow->OnMouseButtonDown.Clear(this);
-		//this->m_pMainWindow->OnClose -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
-		//this->m_pMainWindow->OnMouseMove -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Math::CPoint&>(this, &CGame::WindowMouseMove);
-		//this->m_pMainWindow->OnMouseButtonDown -= CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>, const CB::Window::VirtualKey>(this, &CGame::WindowMouseDown);
+		auto pWindow = this->m_Env.GetWindow();
+		pWindow->OnClose.Clear(this);
+		m_Env.OnMouseDown.Clear(this);
+		m_Env.OnMouseMove.Clear(this);
 	}
 
 	const GameResult	CGame::MainLoop(){
@@ -68,11 +43,11 @@ namespace T3{
 			this->Render();
 
 			timer.Update();
-			this->m_pWindowManager->ProcessEvents();
+			this->m_Env.Update();
 
 			this->Update(timer.GetTimeDelta());
 
-			this->m_pGraphicDevice->Swap();
+			this->m_Env.GetDevice()->Swap();
 		}
 		while(this->m_State != GameState::Shutdown);
 		
@@ -88,7 +63,7 @@ namespace T3{
 	const bool	CGame::WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position){
 		this->m_pCursor->SetPos(Position);
 		
-		auto posNorm = CB::Math::CVector2D(Position) / CB::Math::CVector2D(this->m_pMainWindow->GetSize().ToPoint());
+		auto posNorm = CB::Math::CVector2D(Position) / CB::Math::CVector2D(pWindow->GetSize().ToPoint());
 		posNorm.Y = 1.0f - posNorm.Y;
 		auto posLevel = posNorm * CB::Math::CVector2D(6.4f, 4.8f);
 
@@ -106,13 +81,15 @@ namespace T3{
 	}
 
 	void	CGame::Render(){
-		this->m_pGraphicDevice->Clear(CB::Math::CColor(0.5f, 0.6f, 0.3f));
-		this->m_pGraphicDevice->BeginRender();
+		auto pDev = this->m_Env.GetDevice();
 
-		this->m_pLevel->Render(this->m_pGraphicDevice);
-		this->m_pCursor->Render(this->m_pGraphicDevice);
+		pDev->Clear(CB::Math::CColor(0.5f, 0.6f, 0.3f));
+		pDev->BeginRender();
 
-		this->m_pGraphicDevice->EndRender();
+		this->m_pLevel->Render(pDev);
+		this->m_pCursor->Render(pDev);
+
+		pDev->EndRender();
 	}
 
 	void	CGame::Update(const float32 fTD){

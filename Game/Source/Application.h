@@ -6,13 +6,13 @@
 #include <Timer.h>
 #include <CBStringEx.h>
 
-#include "DriverManager.h"
+#include "DriverContainer.h"
 #include "GameResult.h"
 #include "GameConfig.h"
 
 namespace T3{
 	class CApplication : 
-		public IDriverManager
+		public IDriverContainer
 	{
 	private:
 		CB::Collection::CStringList	m_strCmdArgs;
@@ -29,8 +29,8 @@ namespace T3{
 
 		const int32	Run();
 
-		CB::CRefPtr<CB::Window::IManager>	CreateWindowManager() override;
-		CB::CRefPtr<CB::Graphic::IManager>	CreateGraphicManager(CB::CRefPtr<CB::Window::IManager> pWindowManager) override;
+		CB::CRefPtr<CB::Window::IDriver>	GetWindowDriver() const override;
+		CB::CRefPtr<CB::Graphic::IDriver>	GetGraphicDriver() const override;
 
 	private:
 		void	LoadConfig();

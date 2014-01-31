@@ -42,12 +42,12 @@
     <ClCompile Include="Source\LevelMesh.cpp">
       <Filter>Source\Level</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameEnv.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DriverManager.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game.h">
@@ -76,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="Source\LevelFieldMesh.h">
       <Filter>Source\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameEnv.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DriverContainer.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

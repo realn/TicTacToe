@@ -3,7 +3,7 @@
 #include <SmartPointers_AutoPtr.h>
 #include <GraphicTools.h>
 
-#include "DriverManager.h"
+#include "GameEnv.h"
 #include "GameResult.h"
 #include "GameConfig.h"
 #include "TextureManager.h"
@@ -20,29 +20,26 @@ namespace T3{
 
 	class CGame{
 	private:
-		GameState	m_State;
-		CGameConfig	m_Config;
+		CGameConfig&	m_Config;
+		CGameEnv&		m_Env;
+		GameState		m_State;
 		CB::Math::CVector2D	m_vLevelMousePos;
 
-		CB::CRefPtr<CB::Window::IManager>	m_pWindowManager;
-		CB::CRefPtr<CB::Window::IWindow>	m_pMainWindow;
-		CB::CRefPtr<CB::Graphic::IManager>	m_pGraphicManager;
-		CB::CRefPtr<CB::Graphic::IDevice>	m_pGraphicDevice;
-
-		CB::CAutoPtr<CTextureManager>	m_pTextureManager;
-		CB::CAutoPtr<CShaderManager>	m_pShaderManager;
+		CTextureManager	m_TextureManager;
+		CShaderManager	m_ShaderManager;
 		CB::CAutoPtr<CGameCursor>		m_pCursor;
 		CB::CAutoPtr<CLevel>			m_pLevel;
 
 	public:
-		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameConfig& Config, IDriverManager& DriverManager);
+		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameEnv& Env, CGameConfig& Config);
 		~CGame();
 
 		const GameResult	MainLoop();
 
+		void	EventMouseMove(const CB::Math::CVector2D& vPos);
+		void	EventMouseDown(const CB::Math::CVector2D& vPos, const CB::Window::VirtualKey uKey);
+
 		const bool	WindowClose(CB::CRefPtr<CB::Window::IWindow> pWindow);
-		const bool	WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position);
-		const bool	WindowMouseDown(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey uKey);
 
 	private:
 		void	Render();
