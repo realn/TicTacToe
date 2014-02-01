@@ -60,24 +60,15 @@ namespace T3{
 		return true;
 	}
 
-	const bool	CGame::WindowMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position){
+	void CGame::EventMouseMove(const CB::Math::CVector2D& Position){
 		this->m_pCursor->SetPos(Position);
-		
-		auto posNorm = CB::Math::CVector2D(Position) / CB::Math::CVector2D(pWindow->GetSize().ToPoint());
-		posNorm.Y = 1.0f - posNorm.Y;
-		auto posLevel = posNorm * CB::Math::CVector2D(6.4f, 4.8f);
-
-		this->m_pLevel->SetMousePos(posLevel);
-		this->m_vLevelMousePos = posLevel;
-
-		return true;
+		this->m_pLevel->SetMousePos(Position);
 	}
 
-	const bool	CGame::WindowMouseDown(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey Button){
+	void	CGame::EventMouseDown(const CB::Math::CVector2D& Position, const CB::Window::VirtualKey Button){
 		if(Button == CB::Window::VirtualKey::LBUTTON){
-			this->m_pLevel->PutField(this->m_vLevelMousePos, CLevel::FieldType::Cross);
+			this->m_pLevel->PutField(Position, CLevel::FieldType::Cross);
 		}
-		return true;
 	}
 
 	void	CGame::Render(){

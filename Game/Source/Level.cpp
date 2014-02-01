@@ -149,7 +149,7 @@ namespace T3{
 		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
 			CField& field = this->m_Fields[i];
 
-			field.bHover = field.Rect.Contains(vPosition);
+			field.bHover = field.Rect.Contains(vPosition * CB::Math::CVector2D(6.4f, 4.8f));
 		}
 	}
 
@@ -157,7 +157,7 @@ namespace T3{
 		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
 			CField& field = this->m_Fields[i];
 
-			if(field.Rect.Contains(vPosition)){
+			if(field.Rect.Contains(vPosition * CB::Math::CVector2D(6.4f, 4.8f))){
 				field.Type = FieldType::Cross;
 			}
 		}

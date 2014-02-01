@@ -36,5 +36,8 @@ namespace T3{
 		const bool	EventMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position);
 		const bool	EventMouseDown(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey uKey);
 		const bool	EventMouseUp(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey uKey);
+
+	private:
+		const CB::Math::CVector2D	GetMousePos() const;
 	};
 }

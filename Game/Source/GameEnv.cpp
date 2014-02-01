@@ -2,7 +2,9 @@
 #include <Signals_Method.h>
 
 namespace T3{
-	CGameEnv::CGameEnv(const IDriverContainer& Drivers, const CGameConfig& Config){
+	CGameEnv::CGameEnv(const IDriverContainer& Drivers, const CGameConfig& Config) : 
+		m_Config(Config)
+	{
 		this->m_pWindowManager = Drivers.GetWindowDriver()->CreateManager();
 
 		this->m_pWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single, Config.Resolution, Config.WindowPosition);
@@ -53,8 +55,7 @@ namespace T3{
 		this->m_MousePos = Position;
 
 		if(this->OnMouseMove.IsValid()){
-			auto vPos = CB::Math::CVector2D(Position) / CB::Math::CVector2D(this->m_Config.Resolution.ToPoint());
-			this->OnMouseMove(vPos);
+			this->OnMouseMove(this->GetMousePos());
 		}
 
 		return true;
@@ -63,7 +64,7 @@ namespace T3{
 	const bool	CGameEnv::EventMouseDown(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey uKey){
 		if(this->OnMouseDown.IsValid()){
 			auto vPos = CB::Math::CVector2D(this->m_MousePos) / CB::Math::CVector2D(this->m_Config.Resolution.ToPoint());
-			this->OnMouseDown(vPos, uKey);
+			this->OnMouseDown(this->GetMousePos(), uKey);
 		}
 
 		return true;
@@ -72,9 +73,15 @@ namespace T3{
 	const bool	CGameEnv::EventMouseUp(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Window::VirtualKey uKey){
 		if(this->OnMouseUp.IsValid()){
 			auto vPos = CB::Math::CVector2D(this->m_MousePos) / CB::Math::CVector2D(this->m_Config.Resolution.ToPoint());
-			this->OnMouseUp(vPos, uKey);
+			this->OnMouseUp(this->GetMousePos(), uKey);
 		}
 
 		return true;
+	}
+	
+	const CB::Math::CVector2D	CGameEnv::GetMousePos() const{
+		auto vPos = CB::Math::CVector2D(this->m_MousePos) / CB::Math::CVector2D(this->m_Config.Resolution.ToPoint());
+		vPos.Y = 1.0f - vPos.Y;
+		return vPos;
 	}
 }

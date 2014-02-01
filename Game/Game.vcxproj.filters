@@ -108,5 +108,8 @@
     <None Include="Assets\GridShader.cg">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Assets\CursorShader.cg">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
 </Project>

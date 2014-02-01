@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BasicShader.cg" />
+    <None Include="Assets\CursorShader.cg" />
     <None Include="Assets\GridShader.cg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -23,7 +23,6 @@ namespace T3{
 		CGameConfig&	m_Config;
 		CGameEnv&		m_Env;
 		GameState		m_State;
-		CB::Math::CVector2D	m_vLevelMousePos;
 
 		CTextureManager	m_TextureManager;
 		CShaderManager	m_ShaderManager;
