@@ -7,7 +7,7 @@ namespace T3{
 	{
 		this->m_pWindowManager = Drivers.GetWindowDriver()->CreateManager();
 
-		this->m_pWindow = this->m_pWindowManager->CreateWindow(L"TicTacToe", CB::Window::Style::Single, Config.Resolution, Config.WindowPosition);
+		this->m_pWindow = this->m_pWindowManager->CreateWindow(this->m_Config.AppName, CB::Window::Style::Single, Config.Resolution, Config.WindowPosition);
 		
 		this->m_pGraphicManager = Drivers.GetGraphicDriver()->CreateManager(this->m_pWindowManager);
 
@@ -49,6 +49,10 @@ namespace T3{
 
 	void	CGameEnv::Update(){
 		this->m_pWindowManager->ProcessEvents();
+	}
+
+	const float32	CGameEnv::GetAspectRatio() const{
+		return (float32)this->m_Config.Resolution.Width / (float32)this->m_Config.Resolution.Height;
 	}
 
 	const bool	CGameEnv::EventMouseMove(CB::CRefPtr<CB::Window::IWindow> pWindow, const CB::Math::CPoint& Position){

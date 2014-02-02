@@ -6,6 +6,8 @@
 namespace T3{
 	class CGameConfig{
 	public:
+		CB::CString			AppName;
+
 		CB::Math::CPoint	WindowPosition;
 		CB::Math::CSize		Resolution;
 

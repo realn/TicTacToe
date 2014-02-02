@@ -27,6 +27,8 @@ namespace T3{
 		CB::CRefPtr<CB::Window::IWindow>	GetWindow() const;
 		CB::CRefPtr<CB::Graphic::IDevice>	GetDevice() const;
 
+		const float32	GetAspectRatio() const;
+
 		void	Update();
 
 		CB::Signals::CSlot<void, const CB::Math::CVector2D&>	OnMouseMove;

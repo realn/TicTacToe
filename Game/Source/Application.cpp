@@ -7,7 +7,8 @@
 #include <CBStringEx.h>
 
 namespace T3{
-	CApplication::CApplication(const CB::CString& strCmdLine){
+	CApplication::CApplication(const CB::CString& strAppName, const CB::CString& strCmdLine){
+		this->m_Config.AppName = strAppName;
 		CompileCmdLineArgs(strCmdLine, this->m_strCmdArgs);
 		
 		uint32 uIndex = 0;

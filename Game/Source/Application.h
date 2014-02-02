@@ -24,7 +24,7 @@ namespace T3{
 		CB::CRefPtr<CB::Graphic::IDriver>	m_pGraphicDriver;
 
 	public:
-		CApplication(const CB::CString& strCmdLine);
+		CApplication(const CB::CString& strAppName, const CB::CString& strCmdLine);
 		~CApplication();
 
 		const int32	Run();
