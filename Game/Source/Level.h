@@ -36,6 +36,7 @@ namespace T3{
 		CB::CRefPtr<CB::Graphic::IVertexDeclaration>	m_pDeclaration;
 		CB::CRefPtr<CB::Graphic::IBuffer>	m_pTCoordBuffer;
 		CB::CRefPtr<CB::Graphic::IBuffer>	m_pIndexBuffer;
+		CB::CRefPtr<CB::Graphic::IDeviceState>	m_pState;
 
 		CLevelMesh	m_Grid;
 		CLevelMesh	m_Cross;
@@ -54,5 +55,8 @@ namespace T3{
 		void	SetMousePos(const CB::Math::CVector2D& vPosition);
 
 		void	PutField(const CB::Math::CVector2D& vPosition, const FieldType uType);
+
+	private:
+		void	RenderMesh(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CLevelMesh& Mesh);
 	};
 }

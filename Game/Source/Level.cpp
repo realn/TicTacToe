@@ -69,6 +69,12 @@ namespace T3{
 		this->m_pTCoordBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Vertex, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, tcoords);
 		this->m_pIndexBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Index, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, idxs);
 
+		CB::Graphic::CBlendStateDesc desc(true, 
+			CB::Graphic::CBlendInstDesc(CB::Graphic::BlendOption::SourceAlpha, CB::Graphic::BlendOperation::Add, CB::Graphic::BlendOption::OneMinusSourceAlpha),
+			CB::Graphic::CBlendInstDesc(CB::Graphic::BlendOption::SourceAlpha, CB::Graphic::BlendOperation::Add, CB::Graphic::BlendOption::OneMinusSourceAlpha),
+			0xFF);
+		this->m_pState = pDevice->CreateState(desc).Cast<CB::Graphic::IDeviceState>();
+
 		this->m_mModel = CB::Math::CMatrix::GetIdentity();
 	}
 
@@ -127,28 +133,20 @@ namespace T3{
 		auto mView = CB::Math::CMatrix::GetTranslation(CB::Math::CVector3D(this->m_vGridPos, 0.0f));
 		auto mProj = CB::Math::CMatrix::GetOrtho(0.0f, this->m_vSceneSize.X, 0.0f, this->m_vSceneSize.Y, -1.0f, 4.0f);
 
-		pDevice->SetShader(this->m_pVertexShader);
-		pDevice->SetShader(this->m_pFragmentShader);
-
 		this->m_pVertexShader->SetUniform(L"mModelViewProj", mProj * mView * this->m_mModel);
 
+		pDevice->SetShader(this->m_pVertexShader);
+		pDevice->SetShader(this->m_pFragmentShader);
 		pDevice->SetVertexDeclaration(this->m_pDeclaration);
 		pDevice->SetVertexBuffer(1, this->m_pTCoordBuffer);
 		pDevice->SetIndexBuffer(this->m_pIndexBuffer);
+		pDevice->SetState(this->m_pState);
 
-		if(this->m_Grid.GetNumberOfPolygons() > 0){
-			this->m_pFragmentShader->SetSampler(L"texBase", this->m_Grid.GetTexture());
+		this->RenderMesh(pDevice, this->m_Grid);
+		this->RenderMesh(pDevice, this->m_Cross);
+		this->RenderMesh(pDevice, this->m_Circle);
 
-			pDevice->SetVertexBuffer(0, this->m_Grid.GetBuffer());
-			pDevice->RenderIndexed(this->m_Grid.GetNumberOfPolygons());
-		}
-		if(this->m_Cross.GetNumberOfPolygons() > 0){
-			this->m_pFragmentShader->SetSampler(L"texBase", this->m_Cross.GetTexture());
-
-			pDevice->SetVertexBuffer(0, this->m_Cross.GetBuffer());
-			pDevice->RenderIndexed(this->m_Cross.GetNumberOfPolygons());
-		}
-
+		pDevice->FreeState(CB::Graphic::DeviceStateType::Blend);
 		pDevice->FreeVertexDeclaration();
 		pDevice->FreeIndexBuffer();
 		pDevice->FreeShader(CB::Graphic::ShaderType::Vertex);
@@ -184,8 +182,17 @@ namespace T3{
 			CField& field = this->m_Fields[i];
 
 			if(field.Rect.Contains(vPos)){
-				field.Type = FieldType::Cross;
+				field.Type = uType;
 			}
+		}
+	}
+
+	void	CLevel::RenderMesh(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CLevelMesh& Mesh){
+		if(Mesh.GetNumberOfPolygons() > 0){
+			this->m_pFragmentShader->SetSampler(L"texBase", Mesh.GetTexture());
+
+			pDevice->SetVertexBuffer(0, Mesh.GetBuffer());
+			pDevice->RenderIndexed(Mesh.GetNumberOfPolygons());
 		}
 	}
 }

@@ -16,12 +16,11 @@ namespace T3{
 	};
 
 	CGameCursor::CGameCursor(CB::CRefPtr<CB::Graphic::IDevice> pDevice, const CB::Math::CSize& ScreenSize, CTextureManager& TexMgr, CShaderManager& ShaderMng) : 
-		m_SreenSize(ScreenSize)
+		m_SreenSize(ScreenSize),
+		m_pVShader(ShaderMng.Load(CURSOR_SHADER, CB::Graphic::ShaderType::Vertex)),
+		m_pFragment(ShaderMng.Load(CURSOR_SHADER, CB::Graphic::ShaderType::Fragment)),
+		m_pPointer(TexMgr.Load(CURSOR_TEXTURE))
 	{
-		this->m_pVShader = ShaderMng.Load(CURSOR_SHADER, CB::Graphic::ShaderType::Vertex);
-		this->m_pFragment = ShaderMng.Load(CURSOR_SHADER, CB::Graphic::ShaderType::Fragment);
-		this->m_pPointer = TexMgr.Load(CURSOR_TEXTURE);
-
 		CB::Collection::CList<CB::Graphic::CVertexElement> els;
 		els.Add(CB::Graphic::CVertexElement(0, L"vinput.vPosition", CB::Graphic::VertexType::Float, 2, 0));
 		els.Add(CB::Graphic::CVertexElement(0, L"vinput.vTexCoord", CB::Graphic::VertexType::Float, 2, els.Last().GetSize()));
@@ -37,13 +36,8 @@ namespace T3{
 		verts.Add(CCursorVertex(0.0f, (float32)texSize.Height, 0.0f, 1.0f));
 		this->m_CursorSize = texSize;
 
-		inds.Add(0);
-		inds.Add(2);
-		inds.Add(1);
-
-		inds.Add(0);
-		inds.Add(3);
-		inds.Add(2);
+		inds.Add(0); inds.Add(2); inds.Add(1);
+		inds.Add(0); inds.Add(3); inds.Add(2);
 
 		this->m_pVBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Vertex, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, verts);
 		this->m_pIBuffer = pDevice->CreateBuffer(CB::Graphic::BufferType::Index, CB::Graphic::BufferUsage::Static, CB::Graphic::BufferAccess::Write, inds);
@@ -79,6 +73,13 @@ namespace T3{
 		pDevice->SetState(this->m_pBlendState.Cast<CB::Graphic::IDeviceState>());
 
 		pDevice->RenderIndexed(2);
+
+		pDevice->FreeState(CB::Graphic::DeviceStateType::Blend);
+		pDevice->FreeVertexBuffer(0);
+		pDevice->FreeIndexBuffer();
+		pDevice->FreeShader(CB::Graphic::ShaderType::Vertex);
+		pDevice->FreeShader(CB::Graphic::ShaderType::Fragment);
+		pDevice->FreeVertexDeclaration();
 	}
 
 }

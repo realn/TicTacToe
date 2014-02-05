@@ -12,12 +12,12 @@ namespace T3{
 		m_Env(Env),
 		m_Config(Config),
 		m_TextureManager(Env.GetDevice(), Config.AssetsDir),
-		m_ShaderManager(Env.GetDevice(), Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2)
+		m_ShaderManager(Env.GetDevice(), Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2),
+		m_uField(CLevel::FieldType::Cross)
 	{
 
 		{
 			auto pWindow = this->m_Env.GetWindow();
-
 			pWindow->OnClose += CB::Signals::CMethod<CGame, const bool, CB::CRefPtr<CB::Window::IWindow>>(this, &CGame::WindowClose);
 		}
 
@@ -73,7 +73,8 @@ namespace T3{
 
 	void	CGame::EventMouseDown(const CB::Math::CVector2D& Position, const CB::Window::VirtualKey Button){
 		if(Button == CB::Window::VirtualKey::LBUTTON){
-			this->m_pLevel->PutField(Position, CLevel::FieldType::Cross);
+			this->m_pLevel->PutField(Position, m_uField);
+			this->m_uField = this->m_uField == CLevel::FieldType::Cross ? CLevel::FieldType::Circle : CLevel::FieldType::Cross;
 		}
 	}
 

@@ -31,6 +31,8 @@ namespace T3{
 		CB::CAutoPtr<CLevel>			m_pLevel;
 		CB::CAutoPtr<CBGGridModel>		m_pBackGround;
 
+		CLevel::FieldType	m_uField;
+
 	public:
 		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameEnv& Env, CGameConfig& Config);
 		~CGame();
