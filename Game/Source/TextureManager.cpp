@@ -75,7 +75,7 @@ namespace T3{
 		CB::IO::CImage img;
 
 		img.ReadFromStream(pStream);
-		img.Convert(CB::IO::Image::BitFormat::f32Bit);
+		//img.Convert(CB::IO::Image::BitFormat::f32Bit);
 
 		CB::Graphic::BufferFormat uInputFormat;
 		switch (img.GetColorFormat())

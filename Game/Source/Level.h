@@ -26,8 +26,8 @@ namespace T3{
 		};
 
 		CB::Math::CMatrix	m_mModel;
-		CB::Math::CVector2D	m_vSize;
-		CB::Math::CVector2D m_vFieldSize;
+		CB::Math::CVector2D	m_vSceneSize;
+		CB::Math::CVector2D	m_vGridPos;
 		CB::Collection::CArray<CField, 9>	m_Fields;
 
 		CB::CRefPtr<CB::Graphic::IShader>	m_pVertexShader;
@@ -42,10 +42,13 @@ namespace T3{
 		CLevelMesh	m_Circle;
 
 	public:
-		CLevel(CB::CRefPtr<CB::Graphic::IDevice> pDevice, const CB::Math::CVector2D& vSize, CTextureManager& TexMng, CShaderManager& ShdMng);
+		CLevel(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextureManager& TexMng, CShaderManager& ShdMng);
 
 		void	Update(const float32 fTD);
 		void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice);
+
+		void	SetSceneSize(const CB::Math::CVector2D& vSize);
+		void	SetGridPos(const CB::Math::CVector2D& vPosition);
 
 		void	SetModelMatrix(const CB::Math::CMatrix& mModel);
 		void	SetMousePos(const CB::Math::CVector2D& vPosition);

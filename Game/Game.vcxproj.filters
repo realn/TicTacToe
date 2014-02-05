@@ -33,9 +33,6 @@
     <ClCompile Include="Source\GameCursor.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Level.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\LevelFieldMesh.cpp">
       <Filter>Source\Level</Filter>
     </ClCompile>
@@ -43,6 +40,15 @@
       <Filter>Source\Level</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameEnv.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level.cpp">
+      <Filter>Source\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RectMesh.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BackgroundGrid.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,9 +74,6 @@
     <ClInclude Include="Source\ShaderManager.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Level.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\LevelMesh.h">
       <Filter>Source\Level</Filter>
     </ClInclude>
@@ -81,6 +84,15 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\DriverContainer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Level.h">
+      <Filter>Source\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RectMesh.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BackgroundGrid.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
@@ -100,6 +112,9 @@
     <Image Include="Assets\frame.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\BackGround.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BasicShader.cg">
@@ -109,6 +124,9 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="Assets\CursorShader.cg">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\BackGroundShader.cg">
       <Filter>Assets</Filter>
     </None>
   </ItemGroup>

@@ -23,8 +23,8 @@ namespace T3{
 		this->m_pPointer = TexMgr.Load(CURSOR_TEXTURE);
 
 		CB::Collection::CList<CB::Graphic::CVertexElement> els;
-		els.Add(CB::Graphic::CVertexElement(0, L"vinput.vPosition", 0, CB::Graphic::VertexType::Float, 2));
-		els.Add(CB::Graphic::CVertexElement(0, L"vinput.vTexCoord", els.Last().GetSize(), CB::Graphic::VertexType::Float, 2));
+		els.Add(CB::Graphic::CVertexElement(0, L"vinput.vPosition", CB::Graphic::VertexType::Float, 2, 0));
+		els.Add(CB::Graphic::CVertexElement(0, L"vinput.vTexCoord", CB::Graphic::VertexType::Float, 2, els.Last().GetSize()));
 		this->m_pVDecl = pDevice->CreateVertexDeclaration(this->m_pVShader, els);
 
 		CB::Collection::CList<CCursorVertex>	verts;

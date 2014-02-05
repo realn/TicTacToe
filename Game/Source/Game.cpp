@@ -26,7 +26,13 @@ namespace T3{
 		
 		this->m_pCursor = new CGameCursor(this->m_Env.GetDevice(), this->m_Config.Resolution, this->m_TextureManager, this->m_ShaderManager);
 
-		this->m_pLevel = new CLevel(this->m_Env.GetDevice(), CB::Math::CVector2D(4.0f, 4.0f), this->m_TextureManager, this->m_ShaderManager); 
+		this->m_pLevel = new CLevel(this->m_Env.GetDevice(), this->m_TextureManager, this->m_ShaderManager); 
+		this->m_pLevel->SetSceneSize(CB::Math::CVector2D(1.0f * this->m_Env.GetAspectRatio(), 1.0f));
+		this->m_pLevel->SetGridPos(CB::Math::CVector3D((this->m_Env.GetAspectRatio() - 1.0f)/2.0f, 0.0f));
+
+		this->m_pBackGround = new CBGGridModel(this->m_Env.GetDevice(), this->m_TextureManager, this->m_ShaderManager);
+		this->m_pBackGround->SetScreenSize(CB::Math::CVector2D(1.0f * this->m_Env.GetAspectRatio(), 1.0f));
+		this->m_pBackGround->SetGridPos(CB::Math::CVector3D((this->m_Env.GetAspectRatio() - 1.0f)/2.0f, 0.0f));
 	}
 
 	CGame::~CGame(){
@@ -60,7 +66,7 @@ namespace T3{
 		return true;
 	}
 
-	void CGame::EventMouseMove(const CB::Math::CVector2D& Position){
+	void	CGame::EventMouseMove(const CB::Math::CVector2D& Position){
 		this->m_pCursor->SetPos(Position);
 		this->m_pLevel->SetMousePos(Position);
 	}
@@ -77,6 +83,7 @@ namespace T3{
 		pDev->Clear(CB::Math::CColor(0.5f, 0.6f, 0.3f));
 		pDev->BeginRender();
 
+		this->m_pBackGround->Render(pDev);
 		this->m_pLevel->Render(pDev);
 		this->m_pCursor->Render(pDev);
 

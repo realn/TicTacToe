@@ -84,6 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\BackgroundGrid.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameCursor.cpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="Source\LevelFieldMesh.cpp" />
     <ClCompile Include="Source\LevelMesh.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\RectMesh.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
   </ItemGroup>
@@ -110,6 +112,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BackgroundGrid.h" />
     <ClInclude Include="Source\GameEnv.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\GameCursor.h" />
@@ -120,10 +123,12 @@
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\LevelFieldMesh.h" />
     <ClInclude Include="Source\LevelMesh.h" />
+    <ClInclude Include="Source\RectMesh.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\BackGround.png" />
     <Image Include="Assets\circle.png" />
     <Image Include="Assets\cross.png" />
     <Image Include="Assets\frame.png" />
@@ -131,6 +136,7 @@
     <Image Include="Assets\pointer.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\BackGroundShader.cg" />
     <None Include="Assets\BasicShader.cg" />
     <None Include="Assets\CursorShader.cg" />
     <None Include="Assets\GridShader.cg" />

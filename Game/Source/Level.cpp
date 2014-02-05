@@ -7,27 +7,32 @@ namespace T3{
 	const uint32 FIELD_SIZE_SUM = FIELD_SIZE_X * FIELD_SIZE_Y;
 
 	const CB::CString	SHADER_GRID = L"GridShader";
+	const CB::CString	SHADER_BACKGROUND = L"BackGroundShader";
 	const CB::CString	TEXTURE_FRAME = L"frame";
 	const CB::CString	TEXTURE_CIRCLE = L"circle";
 	const CB::CString	TEXTURE_CROSS = L"cross";
+	const CB::CString	TEXTURE_BACKGROUND = L"backgroud";
 
-	CLevel::CLevel(CB::CRefPtr<CB::Graphic::IDevice> pDevice, const CB::Math::CVector2D& vSize, CTextureManager& TexMng, CShaderManager& ShdMng) :
-		m_vSize(vSize),
+	CLevel::CLevel(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextureManager& TexMng, CShaderManager& ShdMng) :
 		m_Grid(pDevice, FIELD_SIZE_SUM, TexMng.Load(TEXTURE_FRAME)),
 		m_Cross(pDevice, FIELD_SIZE_SUM, TexMng.Load(TEXTURE_CROSS)),
-		m_Circle(pDevice, FIELD_SIZE_SUM, TexMng.Load(TEXTURE_CIRCLE))
+		m_Circle(pDevice, FIELD_SIZE_SUM, TexMng.Load(TEXTURE_CIRCLE)),
+		m_vSceneSize(1.0f, 1.0f)
 	{
-		this->m_vFieldSize = this->m_vSize / CB::Math::CVector2D((float32)FIELD_SIZE_X, (float32)FIELD_SIZE_Y);
-
 		for(uint32 y = 0; y < FIELD_SIZE_Y; y++){
 			for(uint32 x = 0; x < FIELD_SIZE_X; x++){
 				uint32 uIndex = y * FIELD_SIZE_X + x;
 				CField& field = this->m_Fields[uIndex];
 
+				float32 fX = (float32)x / (float32)FIELD_SIZE_X;
+				float32 fY = (float32)y / (float32)FIELD_SIZE_Y;
+				float32 fW = 1.0f / (float32)FIELD_SIZE_X;
+				float32 fH = 1.0f / (float32)FIELD_SIZE_Y;
+
 				field.uIndex = uIndex;
 				field.bHover = false;
-				field.Rect.Position = this->m_vFieldSize * CB::Math::CVector2D((float32)x, (float32)y);
-				field.Rect.Size = this->m_vFieldSize;
+				field.Rect.Position.Set(fX, fY);
+				field.Rect.Size.Set(fW, fH);
 			}
 		}
 
@@ -54,8 +59,8 @@ namespace T3{
 		}
 
 		CB::Collection::CList<CB::Graphic::CVertexElement> vEls;
-		vEls.Add(CB::Graphic::CVertexElement(0, L"vinput.vPosition", 0, CB::Graphic::VertexType::Float, 4));
-		vEls.Add(CB::Graphic::CVertexElement(1, L"vinput.vTexCoord", 0, CB::Graphic::VertexType::Float, 2));
+		vEls.Add(CB::Graphic::CVertexElement(0, L"vinput.vPosition", CB::Graphic::VertexType::Float, 4, 0));
+		vEls.Add(CB::Graphic::CVertexElement(1, L"vinput.vTexCoord", CB::Graphic::VertexType::Float, 2, 0));
 
 		this->m_pVertexShader = ShdMng.Load(SHADER_GRID, CB::Graphic::ShaderType::Vertex);
 		this->m_pFragmentShader = ShdMng.Load(SHADER_GRID, CB::Graphic::ShaderType::Fragment);
@@ -70,6 +75,7 @@ namespace T3{
 	void	CLevel::Update(const float32 fTD){
 		CB::Collection::CList<CLevelFieldMesh> fields;
 		CB::Collection::CList<CLevelFieldMesh> crossFields;
+		CB::Collection::CList<CLevelFieldMesh> circleFields;
 	
 		uint16 uIndex = 0;
 		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
@@ -98,6 +104,15 @@ namespace T3{
 				}
 				break;
 
+			case FieldType::Circle:
+				{
+					CLevelFieldMesh mesh;
+					mesh.SetRect(field.Rect);
+					mesh.SetAlpha(1.0f);
+					circleFields.Add(mesh);
+				}
+				break;
+
 			default:
 				break;
 			}
@@ -105,11 +120,12 @@ namespace T3{
 
 		this->m_Grid.Set(fields);
 		this->m_Cross.Set(crossFields);
+		this->m_Circle.Set(circleFields);
 	}
 
 	void	CLevel::Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice){
-		auto mView = CB::Math::CMatrix::GetIdentity();
-		auto mProj = CB::Math::CMatrix::GetOrtho(0.0f, 6.4f, 0.0f, 4.8f, -1.0f, 4.0f);
+		auto mView = CB::Math::CMatrix::GetTranslation(CB::Math::CVector3D(this->m_vGridPos, 0.0f));
+		auto mProj = CB::Math::CMatrix::GetOrtho(0.0f, this->m_vSceneSize.X, 0.0f, this->m_vSceneSize.Y, -1.0f, 4.0f);
 
 		pDevice->SetShader(this->m_pVertexShader);
 		pDevice->SetShader(this->m_pFragmentShader);
@@ -141,23 +157,33 @@ namespace T3{
 		pDevice->FreeVertexBuffer(1);
 	}
 
+	void	CLevel::SetSceneSize(const CB::Math::CVector2D& vSize){
+		this->m_vSceneSize = vSize;
+	}
+
+	void	CLevel::SetGridPos(const CB::Math::CVector2D& vPosition){
+		this->m_vGridPos = vPosition;
+	}
+
 	void	CLevel::SetModelMatrix(const CB::Math::CMatrix& mModel){
 		this->m_mModel = mModel;
 	}
 
 	void	CLevel::SetMousePos(const CB::Math::CVector2D& vPosition){
+		auto vPos = vPosition * this->m_vSceneSize - this->m_vGridPos;
 		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
 			CField& field = this->m_Fields[i];
 
-			field.bHover = field.Rect.Contains(vPosition * CB::Math::CVector2D(6.4f, 4.8f));
+			field.bHover = field.Rect.Contains(vPos);
 		}
 	}
 
 	void	CLevel::PutField(const CB::Math::CVector2D& vPosition, const CLevel::FieldType uType){
+		auto vPos = vPosition * this->m_vSceneSize - this->m_vGridPos;
 		for(uint32 i = 0; i < this->m_Fields.GetLength(); i++){
 			CField& field = this->m_Fields[i];
 
-			if(field.Rect.Contains(vPosition * CB::Math::CVector2D(6.4f, 4.8f))){
+			if(field.Rect.Contains(vPos)){
 				field.Type = FieldType::Cross;
 			}
 		}

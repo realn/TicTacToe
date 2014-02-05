@@ -10,6 +10,7 @@
 #include "ShaderManager.h"
 #include "GameCursor.h"
 #include "Level.h"
+#include "BackgroundGrid.h"
 
 namespace T3{
 	enum class GameState{
@@ -28,6 +29,7 @@ namespace T3{
 		CShaderManager	m_ShaderManager;
 		CB::CAutoPtr<CGameCursor>		m_pCursor;
 		CB::CAutoPtr<CLevel>			m_pLevel;
+		CB::CAutoPtr<CBGGridModel>		m_pBackGround;
 
 	public:
 		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameEnv& Env, CGameConfig& Config);
