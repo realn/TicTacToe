@@ -10,18 +10,18 @@
     <Filter Include="Source\Level">
       <UniqueIdentifier>{728eedf0-7bc3-4976-b34e-a9956c6ba43d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{c15fc7e4-74e1-43d9-941b-382b55fe5e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GUI">
+      <UniqueIdentifier>{275b02b3-cd43-4783-aac5-675411edb4bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameConfig.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\TextureManager.cpp">
@@ -30,17 +30,11 @@
     <ClCompile Include="Source\ShaderManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameCursor.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\LevelFieldMesh.cpp">
       <Filter>Source\Level</Filter>
     </ClCompile>
     <ClCompile Include="Source\LevelMesh.cpp">
       <Filter>Source\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameEnv.cpp">
-      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Level.cpp">
       <Filter>Source\Level</Filter>
@@ -51,24 +45,30 @@
     <ClCompile Include="Source\BackgroundGrid.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameConfig.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameCursor.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameEnv.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUIControlBase.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUIControlPanel.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameResult.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameConfig.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TextureManager.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameCursor.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderManager.h">
@@ -79,9 +79,6 @@
     </ClInclude>
     <ClInclude Include="Source\LevelFieldMesh.h">
       <Filter>Source\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameEnv.h">
-      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\DriverContainer.h">
       <Filter>Source</Filter>
@@ -94,6 +91,39 @@
     </ClInclude>
     <ClInclude Include="Source\BackgroundGrid.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameConfig.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameCursor.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameEnv.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameResult.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIControlInterface.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIControlBase.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIEnvInterface.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIScreen.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIScreenInterface.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIControlPanel.h">
+      <Filter>Source\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
