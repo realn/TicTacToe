@@ -20,6 +20,9 @@ namespace T3{
 				const CB::Math::CRectangleF32&	GetRect() const;
 
 				virtual void	Render(const IEnv& Env) override;
+
+			private:
+
 			};
 		}
 	}

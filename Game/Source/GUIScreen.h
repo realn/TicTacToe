@@ -27,8 +27,8 @@ namespace T3{
 				return pControl;
 			}
 
-			void	Update(const float32 fTD);
-			void	Render();
+			virtual void	Update(const float32 fTD) override;
+			virtual void	Render(IEnv& Env) override;
 		};
 	}
 }

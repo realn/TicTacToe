@@ -91,6 +91,8 @@
     <ClCompile Include="Source\GameEnv.cpp" />
     <ClCompile Include="Source\GUIControlBase.cpp" />
     <ClCompile Include="Source\GUIControlPanel.cpp" />
+    <ClCompile Include="Source\GUIManager.cpp" />
+    <ClCompile Include="Source\GUIScreen.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LevelFieldMesh.cpp" />
     <ClCompile Include="Source\LevelMesh.cpp" />
@@ -120,6 +122,7 @@
     <ClInclude Include="Source\GUIControlInterface.h" />
     <ClInclude Include="Source\GUIControlPanel.h" />
     <ClInclude Include="Source\GUIEnvInterface.h" />
+    <ClInclude Include="Source\GUIManager.h" />
     <ClInclude Include="Source\GUIScreen.h" />
     <ClInclude Include="Source\GUIScreenInterface.h" />
     <ClInclude Include="Source\Level.h" />

@@ -9,6 +9,11 @@ namespace T3{
 		 public:
 			 CB::Math::CVector3D	Position;
 			 CB::Math::CVector2D	TexCoord;
+
+			 CVertex(const float32 x, const float32 y, const float32 z, const float32 s, const float32 t) :
+				 Position(x, y, z),
+				 TexCoord(s, t)
+			 {}
 		 };
 	 }
 }

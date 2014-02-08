@@ -2,22 +2,30 @@
 
 #include <Types.h>
 #include <CBString.h>
-#include <Tools_Font.h>
+
+#include "ShaderManager.h"
+#include "GUIScreenInterface.h"
 
 namespace T3{
 	namespace GUI{
-		class CManager{
+		class CManager : 
+			public IEnv
+		{
 		private:
-			CB::Tools::CTextMeshGenerator m_TextGen;
-
 			CB::CRefPtr<CB::Graphic::IShader>		m_pVShader;
 			CB::CRefPtr<CB::Graphic::IShader>		m_pFShader;
 			CB::CRefPtr<CB::Graphic::IDeviceState>	m_pBlendState;
 
-		public:
-			CManager(const CB::CString& strFontAsset, const CB::CString& strVShaderAsset, const CB::CString& strFShaderAsset);
+			CB::Collection::CList<CB::CRefPtr<IScreen>>	m_Screens;
 
-			
+		public:
+			CManager(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CShaderManager& ShdMng);
+
+			void PushScreen(CB::CRefPtr<IScreen> pScreen);
+			void PopScreen();
+
+			void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice);
+			void	Update(const float32 fTD);
 		};
 	}
 }
