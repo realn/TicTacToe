@@ -17,6 +17,12 @@ namespace T3{
 				0xFF);
 
 			this->m_pBlendState = pDevice->CreateState(desc).Cast<IDeviceState>();
+
+			CB::Collection::CList<CVertexElement> els;
+			els.Add(CVertexElement(0, L"vinput.vPosition", VertexType::Float, 3, 0));
+			els.Add(CVertexElement(0, L"vinput.vTexCoord", VertexType::Float, 2, els.Last().GetSize()));
+
+			this->m_pVertexDeclaration = pDevice->CreateVertexDeclaration(this->m_pVShader, els);
 		}
 
 		void	CManager::PushScreen(CB::CRefPtr<IScreen> pScreen){
@@ -34,11 +40,16 @@ namespace T3{
 			pDevice->SetShader(this->m_pVShader);
 			pDevice->SetShader(this->m_pFShader);
 			pDevice->SetState(this->m_pBlendState);
+			pDevice->SetVertexDeclaration(this->m_pVertexDeclaration);
+
+			this->m_pFShader->SetUniform(L"mModelViewProj", 
+				CB::Math::CMatrix::GetOrtho(
 
 			for(uint32 i = this->m_Screens.GetLength(); i > 0; i++){
-				this->m_Screens[i]->Render(*this);
+				this->m_Screens[i]->Render(pDevice);
 			}
 
+			pDevice->FreeVertexDeclaration();
 			pDevice->FreeState(CB::Graphic::DeviceStateType::Blend);
 			pDevice->FreeShader(CB::Graphic::ShaderType::Vertex);
 			pDevice->FreeShader(CB::Graphic::ShaderType::Fragment);

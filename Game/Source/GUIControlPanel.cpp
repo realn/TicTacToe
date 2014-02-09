@@ -39,13 +39,13 @@ namespace T3{
 				return this->m_Rect;
 			}
 
-			void	CPanel::Render(const IEnv& Env){
-				Env.GetDevice()->SetVertexBuffer(0, this->m_pVertexBuffer);
-				Env.GetDevice()->SetIndexBuffer(this->m_pIndexBuffer);
+			void	CPanel::Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice){
+				pDevice->SetVertexBuffer(0, this->m_pVertexBuffer);
+				pDevice->SetIndexBuffer(this->m_pIndexBuffer);
 
-				Env.GetDevice()->RenderIndexed(2);
+				pDevice->RenderIndexed(2);
 
-				CControlBase::Render(Env);
+				CControlBase::Render(pDevice);
 			}
 		}
 	}

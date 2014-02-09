@@ -22,7 +22,7 @@ namespace T3{
 			}
 		}
 
-		void	CControlBase::Render(){
+		void	CControlBase::Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice){
 			for(uint32 i = 0; i < this->m_Controls.GetLength(); i++){
 				this->m_Controls[i]->Render();
 			}

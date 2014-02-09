@@ -10,7 +10,8 @@ namespace T3{
 		{
 		protected:
 			CB::CRefPtr<CB::Graphic::IDevice>				m_pDevice;
-			CB::Collection::CList<CB::CRefPtr<IControl>>	m_Controls;
+			mutable CB::Collection::CList<CB::CRefPtr<IControl>>	m_Controls;
+			CB::Math::CVector2D	m_vSize;
 
 		public:
 			CScreen(CB::CRefPtr<CB::Graphic::IDevice> pDevice, const CB::Math::CVector2D& vSize);
@@ -28,7 +29,7 @@ namespace T3{
 			}
 
 			virtual void	Update(const float32 fTD) override;
-			virtual void	Render(IEnv& Env) override;
+			virtual void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice) override;
 		};
 	}
 }

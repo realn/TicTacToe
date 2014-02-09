@@ -15,6 +15,7 @@ namespace T3{
 			CB::CRefPtr<CB::Graphic::IShader>		m_pVShader;
 			CB::CRefPtr<CB::Graphic::IShader>		m_pFShader;
 			CB::CRefPtr<CB::Graphic::IDeviceState>	m_pBlendState;
+			CB::CRefPtr<CB::Graphic::IVertexDeclaration>	m_pVertexDeclaration;
 
 			CB::Collection::CList<CB::CRefPtr<IScreen>>	m_Screens;
 

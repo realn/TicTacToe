@@ -21,7 +21,7 @@ namespace T3{
 			virtual IControlList&		GetControls() const = 0;
 
 			virtual void	Update(const float32 fTD) = 0;
-			virtual void	Render(const IEnv& Env) = 0;
+			virtual void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice) = 0;
 		};
 	}
 }

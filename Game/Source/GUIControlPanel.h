@@ -19,7 +19,7 @@ namespace T3{
 				void	SetRect(const CB::Math::CRectangleF32& Rect);
 				const CB::Math::CRectangleF32&	GetRect() const;
 
-				virtual void	Render(const IEnv& Env) override;
+				virtual void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice) override;
 
 			private:
 
