@@ -21,12 +21,7 @@ namespace T3{
 
 			IControlList&	GetControls() const override;
 
-			template<typename _Type>
-			CB::CRefPtr<_Type>	AddControl(const CB::CString& strID){
-				_Type* pControl = new _Type(*this, strID);
-				this->m_Controls.Add(pControl);
-				return pControl;
-			}
+			void	AddControl(CB::CRefPtr<IControl> pControl);
 
 			virtual void	Update(const float32 fTD) override;
 			virtual void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice) override;

@@ -1,19 +1,24 @@
 #include "Game.h"
 #include <Timer.h>
 #include <Signals_Method.h>
-#include "TextureManager.h"
 #include <IO_Path.h>
 #include <IO_File.h>
 #include <IO_TextReader.h>
 
+#include "GUIScreen.h"
+#include "GUIControlPanel.h"
+
 namespace T3{
+	const float32	GUI_SCREEN_H = 600.0f;
+
 	CGame::CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameEnv& Env, CGameConfig& Config) :
 		m_State(GameState::MainMenu),
 		m_Env(Env),
 		m_Config(Config),
 		m_TextureManager(Env.GetDevice(), Config.AssetsDir),
 		m_ShaderManager(Env.GetDevice(), Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2),
-		m_uField(CLevel::FieldType::Cross)
+		m_uField(CLevel::FieldType::Cross),
+		m_GUIManager(Env.GetDevice(), m_ShaderManager)
 	{
 
 		{
@@ -33,6 +38,14 @@ namespace T3{
 		this->m_pBackGround = new CBGGridModel(this->m_Env.GetDevice(), this->m_TextureManager, this->m_ShaderManager);
 		this->m_pBackGround->SetScreenSize(CB::Math::CVector2D(1.0f * this->m_Env.GetAspectRatio(), 1.0f));
 		this->m_pBackGround->SetGridPos(CB::Math::CVector3D((this->m_Env.GetAspectRatio() - 1.0f)/2.0f, 0.0f));
+
+		CB::Math::CVector2D guiSize(this->m_Env.GetAspectRatio() * GUI_SCREEN_H, GUI_SCREEN_H);
+		CB::CRefPtr<GUI::CScreen> pScreen = new GUI::CScreen(Env.GetDevice(), guiSize);
+		CB::CRefPtr<GUI::Control::CPanel> pPanel = new GUI::Control::CPanel(*pScreen, L"testPanel");
+		
+		pPanel->SetRect(CB::Math::CRectangleF32(150.0f, 150.0f, 100.0f, 100.0f));
+		pScreen->AddControl(pPanel.Cast<GUI::IControl>());
+		this->m_GUIManager.PushScreen(pScreen.Cast<GUI::IScreen>());
 	}
 
 	CGame::~CGame(){
@@ -87,11 +100,13 @@ namespace T3{
 		this->m_pBackGround->Render(pDev);
 		this->m_pLevel->Render(pDev);
 		this->m_pCursor->Render(pDev);
+		this->m_GUIManager.Render(pDev);
 
 		pDev->EndRender();
 	}
 
 	void	CGame::Update(const float32 fTD){
 		this->m_pLevel->Update(fTD);
+		this->m_GUIManager.Update(fTD);
 	}
 }

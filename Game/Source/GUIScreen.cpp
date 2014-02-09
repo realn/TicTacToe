@@ -21,6 +21,13 @@ namespace T3{
 			return this->m_Controls;
 		}
 
+		void	CScreen::AddControl(CB::CRefPtr<IControl> pControl){
+			if(!CB::Collection::Contains(this->m_Controls, pControl)){
+				this->m_Controls.Add(pControl);
+				pControl->SetParentNull();
+			}
+		}
+
 		void	CScreen::Update(const float32 fTD){
 			for(uint32 i = 0; i < this->m_Controls.GetLength(); i++){
 				this->m_Controls[i]->Update(fTD);
@@ -28,6 +35,9 @@ namespace T3{
 		}
 
 		void	CScreen::Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice){
+			auto mMatrix = CB::Math::CMatrix::GetOrtho(0.0f, this->m_vSize.X, 0.0f, this->m_vSize.Y, -1.0f, 1.0f);
+
+			this->m_pDevice->GetShader(CB::Graphic::ShaderType::Vertex)->SetUniform(L"mModelViewProj", mMatrix);
 			for(uint32 i = 0; i < this->m_Controls.GetLength(); i++){
 				this->m_Controls[i]->Render(pDevice);
 			}

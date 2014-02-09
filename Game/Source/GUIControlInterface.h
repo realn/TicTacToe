@@ -20,6 +20,20 @@ namespace T3{
 			virtual const CB::CString&	GetID() const = 0;
 			virtual IControlList&		GetControls() const = 0;
 
+			virtual void	SetParent(CB::CRefPtr<IControl> pControl) = 0;
+			virtual void	SetParentNull() = 0;
+			virtual CB::CRefPtr<IControl>	GetParent() const = 0;
+
+			virtual void	AddControl(CB::CRefPtr<IControl> pControl) = 0;
+			virtual void	RemoveControl(CB::CRefPtr<IControl> pControl) = 0;
+			virtual void	RemoveControl(const uint32 uIndex) = 0;
+
+			virtual void	SetEnabled(const bool bEnable) = 0;
+			virtual const bool	IsEnabled() const = 0;
+
+			virtual void	SetVisible(const bool bVisible) = 0;
+			virtual const bool	IsVisible() const = 0;
+
 			virtual void	Update(const float32 fTD) = 0;
 			virtual void	Render(CB::CRefPtr<CB::Graphic::IDevice> pDevice) = 0;
 		};

@@ -11,6 +11,7 @@
 #include "GameCursor.h"
 #include "Level.h"
 #include "BackgroundGrid.h"
+#include "GUIManager.h"
 
 namespace T3{
 	enum class GameState{
@@ -27,6 +28,7 @@ namespace T3{
 
 		CTextureManager	m_TextureManager;
 		CShaderManager	m_ShaderManager;
+		GUI::CManager	m_GUIManager;
 		CB::CAutoPtr<CGameCursor>		m_pCursor;
 		CB::CAutoPtr<CLevel>			m_pLevel;
 		CB::CAutoPtr<CBGGridModel>		m_pBackGround;

@@ -29,7 +29,7 @@ namespace T3{
 			}
 
 			void	CPanel::SetRect(const CB::Math::CRectangleF32& Rect){
-				this->m_Rect;
+				this->m_Rect = Rect;
 				CB::Collection::CList<CVertex> verts;
 				AddVertexs(this->m_Rect, verts);
 				this->m_pVertexBuffer->LoadSubData(verts, 0);
@@ -43,6 +43,7 @@ namespace T3{
 				pDevice->SetVertexBuffer(0, this->m_pVertexBuffer);
 				pDevice->SetIndexBuffer(this->m_pIndexBuffer);
 
+				pDevice->GetShader(CB::Graphic::ShaderType::Fragment)->SetUniform(L"fAlpha", 0.8f);
 				pDevice->RenderIndexed(2);
 
 				CControlBase::Render(pDevice);

@@ -3,7 +3,7 @@
 namespace T3{
 	namespace GUI{
 
-		const CB::CString GUI_SHADER = L"GUIShader.cg";
+		const CB::CString GUI_SHADER = L"GUIShader";
 
 		CManager::CManager(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CShaderManager& ShdMng) :
 			m_pVShader(ShdMng.Load(GUI_SHADER, CB::Graphic::ShaderType::Vertex)),
@@ -26,13 +26,12 @@ namespace T3{
 		}
 
 		void	CManager::PushScreen(CB::CRefPtr<IScreen> pScreen){
-			this->m_Screens.Add(pScreen);
+			this->m_Screens.Insert(0, pScreen);
 		}
 
 		void	CManager::PopScreen(){
 			if(!this->m_Screens.IsEmpty()){
-				uint32 uIndex = this->m_Screens.GetLength() - 1;
-				this->m_Screens.Remove(uIndex);
+				this->m_Screens.Remove(0);
 			}
 		}
 
@@ -42,10 +41,11 @@ namespace T3{
 			pDevice->SetState(this->m_pBlendState);
 			pDevice->SetVertexDeclaration(this->m_pVertexDeclaration);
 
-			this->m_pFShader->SetUniform(L"mModelViewProj", 
-				CB::Math::CMatrix::GetOrtho(
+			this->m_pVShader->SetUniform(L"mModelViewProj", 
+				CB::Math::CMatrix::GetOrtho(2.0f, 2.0f, -1.0f, 1.0f)
+				);
 
-			for(uint32 i = this->m_Screens.GetLength(); i > 0; i++){
+			for(uint32 i = 0; i < this->m_Screens.GetLength(); i++){
 				this->m_Screens[i]->Render(pDevice);
 			}
 

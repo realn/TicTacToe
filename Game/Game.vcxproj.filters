@@ -16,6 +16,9 @@
     <Filter Include="Source\GUI">
       <UniqueIdentifier>{275b02b3-cd43-4783-aac5-675411edb4bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Fonts">
+      <UniqueIdentifier>{609b2f26-56b1-411f-9c3e-e656c508ed63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -134,6 +137,9 @@
     <ClInclude Include="Source\GUIManager.h">
       <Filter>Source\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GUIVertex.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\pointer.png">
@@ -168,5 +174,13 @@
     <None Include="Assets\BackGroundShader.cg">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Assets\GUIShader.cg">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\Fonts\Exo2.0-Regular.otf">
+      <Filter>Assets\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

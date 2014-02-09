@@ -8,8 +8,7 @@
 
 namespace T3{
 	namespace GUI{
-		class CManager : 
-			public IEnv
+		class CManager
 		{
 		private:
 			CB::CRefPtr<CB::Graphic::IShader>		m_pVShader;
