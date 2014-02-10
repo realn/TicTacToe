@@ -1,0 +1,39 @@
+
+uniform	float4x4	mTransform;
+uniform	sampler2D	texBase;
+
+struct	VINPUT{
+	float3	vPosition : POSITION;
+	float2	vTexCoord;
+};
+
+struct VOUTPUT{
+	float4	vPosition : POSITION;
+	float2	vTexCoord;
+};
+
+struct FINPUT{
+	float4	vPosition;
+	float2	vTexCoord;
+};
+
+struct FOUTPUT{
+	float4	vColor : COLOR;
+};
+
+VOUTPUT	vmain(VINPUT vinput){
+	VOUTPUT	voutput;
+
+	voutput.vPosition = mul(mTransform, float4(vinput.vPosition, 1.0f));
+	voutput.vTexCoord = vinput.vTexCoord;
+
+	return voutput;
+}
+
+FOUTPUT	fmain(FINPUT finput){
+	FOUTPUT foutput;
+
+	foutput.vColor = tex2D(texBase, finput.vTexCoord);
+
+	return foutput;
+}

@@ -18,7 +18,8 @@ namespace T3{
 		m_TextureManager(Env.GetDevice(), Config.AssetsDir),
 		m_ShaderManager(Env.GetDevice(), Config.AssetsDir, CB::Graphic::ShaderVersion::ShaderModel_2),
 		m_uField(CLevel::FieldType::Cross),
-		m_GUIManager(Env.GetDevice(), m_ShaderManager)
+		m_GUIManager(Env.GetDevice(), m_ShaderManager),
+		m_Text(Env.GetDevice(), m_ShaderManager, m_Config.AssetsDir)
 	{
 
 		{
@@ -101,6 +102,10 @@ namespace T3{
 		this->m_pLevel->Render(pDev);
 		this->m_pCursor->Render(pDev);
 		this->m_GUIManager.Render(pDev);
+
+		auto mTransform = CB::Math::CMatrix::GetOrtho(10.0f, 10.0f, -1.0f, 1.0f);
+		this->m_Text.SetTransform(mTransform);
+		this->m_Text.Print(L"TEST");
 
 		pDev->EndRender();
 	}

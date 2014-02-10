@@ -186,6 +186,9 @@
     <None Include="Assets\GUIShader.cg">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Assets\TextShader.cg">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\Exo2.0-Regular.otf">

@@ -13,6 +13,8 @@
 #include "BackgroundGrid.h"
 #include "GUIManager.h"
 
+#include "TextRenderer.h"
+
 namespace T3{
 	enum class GameState{
 		MainMenu,
@@ -34,6 +36,8 @@ namespace T3{
 		CB::CAutoPtr<CBGGridModel>		m_pBackGround;
 
 		CLevel::FieldType	m_uField;
+
+		CTextRenderer	m_Text;
 
 	public:
 		CGame(const CB::Collection::ICountable<CB::CString>& strArgs, CGameEnv& Env, CGameConfig& Config);

@@ -156,6 +156,7 @@
     <None Include="Assets\CursorShader.cg" />
     <None Include="Assets\GridShader.cg" />
     <None Include="Assets\GUIShader.cg" />
+    <None Include="Assets\TextShader.cg" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\Exo2.0-Regular.otf" />
