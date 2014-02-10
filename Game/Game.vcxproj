@@ -99,6 +99,7 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\RectMesh.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
+    <ClCompile Include="Source\TextRenderer.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +122,7 @@
     <ClInclude Include="Source\GUIControlBase.h" />
     <ClInclude Include="Source\GUIControlInterface.h" />
     <ClInclude Include="Source\GUIControlPanel.h" />
+    <ClInclude Include="Source\GUIEnv.h" />
     <ClInclude Include="Source\GUIEnvInterface.h" />
     <ClInclude Include="Source\GUIManager.h" />
     <ClInclude Include="Source\GUIScreen.h" />
@@ -137,6 +139,7 @@
     <ClInclude Include="Source\LevelMesh.h" />
     <ClInclude Include="Source\RectMesh.h" />
     <ClInclude Include="Source\ShaderManager.h" />
+    <ClInclude Include="Source\TextRenderer.h" />
     <ClInclude Include="Source\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>

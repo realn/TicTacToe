@@ -41,10 +41,6 @@ namespace T3{
 			pDevice->SetState(this->m_pBlendState);
 			pDevice->SetVertexDeclaration(this->m_pVertexDeclaration);
 
-			this->m_pVShader->SetUniform(L"mModelViewProj", 
-				CB::Math::CMatrix::GetOrtho(2.0f, 2.0f, -1.0f, 1.0f)
-				);
-
 			for(uint32 i = 0; i < this->m_Screens.GetLength(); i++){
 				this->m_Screens[i]->Render(pDevice);
 			}
