@@ -6,6 +6,7 @@ namespace T3{
 	const CB::CString	TEXT_SHADER = L"TextShader";
 	const CB::CString	TEXT_FONT = L"Fonts/Exo2.0-Regular.otf";
 	const CB::CString	SHADER_TRANSFORM = L"mTransform";
+	const CB::CString	SHADER_COLOR = L"vColor";
 	const CB::CString	SHADER_TEXTURE = L"texBase";
 	const CB::CString	SHADER_PARAM_POSITION = L"vinput.vPosition";
 	const CB::CString	SHADER_PARAM_TEXCOORD = L"vinput.vTexCoord";
@@ -22,10 +23,12 @@ namespace T3{
 		auto pFont = pFontMng->Load(pFontStream);
 
 		pFont->SelectFace(0);
-		pFont->SetSize(16);
+		pFont->SetSize(64);
 		{
 			CB::Collection::CList<CB::Tools::CFontCharDesc> charList;
 			CB::Tools::CFontTextureGenerator fontTexGen(pDevice);
+			fontTexGen.MaxTextureSize.Set(1024, 1024);
+			//fontTexGen.CharPadding.Set(4, 4);
 			this->m_pTexture = fontTexGen.Generate(pFont, charList);
 			this->m_pTextGen = new CB::Tools::CTextMeshGenerator(charList);
 		}
@@ -47,10 +50,17 @@ namespace T3{
 			CBlendStateDesc blendDesc(true, instDesc, instDesc, 0xFF);
 			this->m_pBlendState = pDevice->CreateState(blendDesc).Cast<IDeviceState>();
 		}
+
+		this->SetTransform(CB::Math::CMatrix::GetIdentity());
+		this->SetColor(CB::Math::CColor(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
 	void	CTextRenderer::SetTransform(const CB::Math::CMatrix& mTransform){
 		this->m_pVShader->SetUniform(SHADER_TRANSFORM, mTransform);
+	}
+
+	void	CTextRenderer::SetColor(const CB::Math::CColor& Color){
+		this->m_pFShader->SetUniform(SHADER_COLOR, Color.ToVector4D());
 	}
 
 	void	CTextRenderer::Print(const CB::CString& strText){

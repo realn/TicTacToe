@@ -98,14 +98,16 @@ namespace T3{
 		pDev->Clear(CB::Math::CColor(0.5f, 0.6f, 0.3f));
 		pDev->BeginRender();
 
-		this->m_pBackGround->Render(pDev);
+		//this->m_pBackGround->Render(pDev);
 		this->m_pLevel->Render(pDev);
 		this->m_pCursor->Render(pDev);
 		this->m_GUIManager.Render(pDev);
 
-		auto mTransform = CB::Math::CMatrix::GetOrtho(10.0f, 10.0f, -1.0f, 1.0f);
+		auto mTransform = CB::Math::CMatrix::GetOrtho(0.0f, 10.0f, 0.0f, 10.0f, -1.0f, 1.0f) * 
+			CB::Math::CMatrix::GetTranslation(0.0f, 1.0f, 0.0f);
 		this->m_Text.SetTransform(mTransform);
-		this->m_Text.Print(L"TEST");
+		this->m_Text.SetColor(CB::Math::CColor(0.0f, 0.0f, 0.0f, 1.0f));
+		this->m_Text.Print(L"Marek Mlynarski?!");
 
 		pDev->EndRender();
 	}

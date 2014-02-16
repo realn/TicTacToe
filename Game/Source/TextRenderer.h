@@ -24,6 +24,7 @@ namespace T3{
 		CTextRenderer(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CShaderManager& ShdMng, const CB::CString& strAssetsDir);
 
 		void	SetTransform(const CB::Math::CMatrix& mTransform);
+		void	SetColor(const CB::Math::CColor& Color);
 		void	Print(const CB::CString& strText);
 
 		void	BeginTextBlock();
