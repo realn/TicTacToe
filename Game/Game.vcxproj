@@ -89,10 +89,6 @@
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameCursor.cpp" />
     <ClCompile Include="Source\GameEnv.cpp" />
-    <ClCompile Include="Source\GUIControlBase.cpp" />
-    <ClCompile Include="Source\GUIControlPanel.cpp" />
-    <ClCompile Include="Source\GUIManager.cpp" />
-    <ClCompile Include="Source\GUIScreen.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LevelFieldMesh.cpp" />
     <ClCompile Include="Source\LevelMesh.cpp" />
@@ -119,15 +115,10 @@
   <ItemGroup>
     <ClInclude Include="Source\BackgroundGrid.h" />
     <ClInclude Include="Source\GameEnv.h" />
-    <ClInclude Include="Source\GUIControlBase.h" />
-    <ClInclude Include="Source\GUIControlInterface.h" />
-    <ClInclude Include="Source\GUIControlPanel.h" />
-    <ClInclude Include="Source\GUIEnv.h" />
-    <ClInclude Include="Source\GUIEnvInterface.h" />
-    <ClInclude Include="Source\GUIManager.h" />
+    <ClInclude Include="Source\GUIItem.h" />
+    <ClInclude Include="Source\GUIMain.h" />
     <ClInclude Include="Source\GUIScreen.h" />
-    <ClInclude Include="Source\GUIScreenInterface.h" />
-    <ClInclude Include="Source\GUIVertex.h" />
+    <ClInclude Include="Source\GUITextItem.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\GameCursor.h" />
     <ClInclude Include="Source\Application.h" />
@@ -137,6 +128,7 @@
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\LevelFieldMesh.h" />
     <ClInclude Include="Source\LevelMesh.h" />
+    <ClInclude Include="Source\Manage_ItemContainer.h" />
     <ClInclude Include="Source\RectMesh.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\TextRenderer.h" />
