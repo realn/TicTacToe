@@ -23,13 +23,16 @@ namespace T3{
 		auto pFont = pFontMng->Load(pFontStream);
 
 		pFont->SelectFace(0);
-		pFont->SetSize(64);
+		pFont->SetSize(48);
 		{
+			using namespace CB::Graphic;
+
 			CB::Collection::CList<CB::Tools::CFontCharDesc> charList;
 			CB::Tools::CFontTextureGenerator fontTexGen(pDevice);
-			fontTexGen.MaxTextureSize.Set(1024, 1024);
-			//fontTexGen.CharPadding.Set(4, 4);
+			fontTexGen.MaxTextureSize.Set(512, 512);
+			fontTexGen.CharPadding.Set(4, 4);
 			this->m_pTexture = fontTexGen.Generate(pFont, charList);
+			this->m_pTexture->SetFilters(TextureFilter::Linear, TextureFilter::Linear, TextureFilter::Linear);
 			this->m_pTextGen = new CB::Tools::CTextMeshGenerator(charList);
 		}
 

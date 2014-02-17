@@ -104,7 +104,7 @@ namespace T3{
 		this->m_GUIManager.Render(pDev);
 
 		auto mTransform = CB::Math::CMatrix::GetOrtho(0.0f, 10.0f, 0.0f, 10.0f, -1.0f, 1.0f) * 
-			CB::Math::CMatrix::GetTranslation(0.0f, 1.0f, 0.0f);
+			CB::Math::CMatrix::GetTranslation(0.0f, 0.0f, 0.0f);
 		this->m_Text.SetTransform(mTransform);
 		this->m_Text.SetColor(CB::Math::CColor(0.0f, 0.0f, 0.0f, 1.0f));
 		this->m_Text.Print(L"Marek Mlynarski?!");
