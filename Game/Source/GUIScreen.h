@@ -2,8 +2,9 @@
 
 #include <Ref.h>
 #include <SmartPointers_RefPtr.h>
-#include <Manage_Object.h>
+#include <GraphicDriver.h>
 
+#include "Manage_ItemContainer.h"
 #include "GUIItem.h"
 
 namespace T3{
@@ -12,11 +13,14 @@ namespace T3{
 
 		class CScreen : 
 			public CB::IRef,
-			public CB::Manage::IObjectManager<CScreen, IItem>,
-			public CB::Manage::IManagedObject<CMain, CScreen>
+			public Manage::IItem<CMain>,
+			public Manage::IItemContainer<IItem>
 		{
+		protected:
+			CB::Math::CVector2D	m_vSize;
+
 		public:
-			CScreen(CMain& Main);
+			CScreen(CB::CRefPtr<CMain> pMain, const CB::Math::CVector2D& vSize);
 
 			virtual void	Render();
 			virtual void	Update(const float32 fTD);

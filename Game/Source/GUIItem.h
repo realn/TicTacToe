@@ -2,7 +2,8 @@
 
 #include <Ref.h>
 #include <SmartPointers_RefPtr.h>
-#include <Manage_Object.h>
+
+#include "Manage_ItemContainer.h"
 
 namespace T3{
 	namespace GUI{
@@ -14,12 +15,13 @@ namespace T3{
 		};
 
 		class IItem :
-			public CB::IRef
+			public CB::IRef,
+			public Manage::IItem<CScreen>
 		{
 		public:
-			IItem(CScreen& Screen);
+			IItem(CB::CRefPtr<CScreen> Screen);
 
-			virtual ItemType	GetType() const = 0;
+			virtual const ItemType	GetType() const = 0;
 
 			virtual void	Render() = 0;
 			virtual void	Update(const float32 fTD) = 0;

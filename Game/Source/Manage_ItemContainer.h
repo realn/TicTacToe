@@ -50,8 +50,8 @@ namespace T3{
 		public:
 			~IItemContainer();
 
-			virtual	ItemPtr	AddItem(ItemPtr Item);
-			virtual	void	RemoveItem(ItemPtr Item);
+			virtual	const bool	AddItem(ItemPtr Item);
+			virtual	const bool	RemoveItem(ItemPtr Item);
 			virtual void	Clear();
 		};
 
@@ -60,19 +60,22 @@ namespace T3{
 		IItemContainer<_Item>::~IItemContainer(){}
 
 		template<typename _Item>
-		IItemContainer<_Item>::ItemPtr	IItemContainer<_Item>::AddItem(IItemContainer<_Item>::ItemPtr Item){
+		const bool	IItemContainer<_Item>::AddItem(IItemContainer<_Item>::ItemPtr Item){
 			if(!CB::Collection::Contains(this->m_Items, Item)){
 				this->m_Items.Add(Item);
+				return true;
 			}
-			return Item;
+			return false;
 		}
 
 		template<typename _Item>
-		void	IItemContainer<_Item>::RemoveItem(IItemContainer<_Item>::ItemPtr Item){
+		const bool	IItemContainer<_Item>::RemoveItem(IItemContainer<_Item>::ItemPtr Item){
 			uint32 uIndex = 0;
 			if(CB::Collection::TryFind(this->m_Items, Item, uIndex)){
 				this->m_Items.Remove(uIndex);
+				return true;
 			}
+			return false;
 		}
 
 		template<typename _Item>
