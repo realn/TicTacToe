@@ -1,11 +1,14 @@
 #pragma once
 
-#include <Collection_List.h>
 #include <Ref.h>
 #include <SmartPointers_RefPtr.h>
+#include <Collection_List.h>
+#include <Collection_Funcs.h>
 
 namespace T3{
 	namespace Manage{
+		template<typename _Item> class IItemContainer;
+
 		template<typename _Parent>
 		class IItem{
 		public:
@@ -36,10 +39,45 @@ namespace T3{
 
 		
 
-		template<typename _Parent, typename _Item>
+		template<typename _Item>
 		class IItemContainer{
 		public:
-			
+			typedef CB::CRefPtr<_Item>	ItemPtr;
+
+		protected:
+			CB::Collection::CList<ItemPtr>	m_Items;
+
+		public:
+			~IItemContainer();
+
+			virtual	ItemPtr	AddItem(ItemPtr Item);
+			virtual	void	RemoveItem(ItemPtr Item);
+			virtual void	Clear();
 		};
+
+
+		template<typename _Item>
+		IItemContainer<_Item>::~IItemContainer(){}
+
+		template<typename _Item>
+		IItemContainer<_Item>::ItemPtr	IItemContainer<_Item>::AddItem(IItemContainer<_Item>::ItemPtr Item){
+			if(!CB::Collection::Contains(this->m_Items, Item)){
+				this->m_Items.Add(Item);
+			}
+			return Item;
+		}
+
+		template<typename _Item>
+		void	IItemContainer<_Item>::RemoveItem(IItemContainer<_Item>::ItemPtr Item){
+			uint32 uIndex = 0;
+			if(CB::Collection::TryFind(this->m_Items, Item, uIndex)){
+				this->m_Items.Remove(uIndex);
+			}
+		}
+
+		template<typename _Item>
+		void	IItemContainer<_Item>::Clear(){
+			this->m_Items.Clear();
+		}
 	}
 }

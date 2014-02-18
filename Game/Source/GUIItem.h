@@ -14,8 +14,7 @@ namespace T3{
 		};
 
 		class IItem :
-			public CB::IRef,
-			public CB::Manage::IManagedObject<CScreen, IItem>
+			public CB::IRef
 		{
 		public:
 			IItem(CScreen& Screen);
