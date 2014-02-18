@@ -90,6 +90,7 @@
     <ClCompile Include="Source\GameCursor.cpp" />
     <ClCompile Include="Source\GameEnv.cpp" />
     <ClCompile Include="Source\GUIMain.cpp" />
+    <ClCompile Include="Source\GUIScreen.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LevelFieldMesh.cpp" />
     <ClCompile Include="Source\LevelMesh.cpp" />

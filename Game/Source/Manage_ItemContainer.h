@@ -7,12 +7,10 @@
 
 namespace T3{
 	namespace Manage{
-		template<typename _Item> class IItemContainer;
-
 		template<typename _Parent>
 		class IItem{
 		public:
-			typename CB::CPtr<_Parent> ParentPtr;
+			typedef CB::CPtr<_Parent> ParentPtr;
 
 		protected:
 			ParentPtr	m_pParent;

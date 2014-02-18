@@ -5,6 +5,7 @@
 #include "GUIScreen.h"
 #include "TextRenderer.h"
 #include "Manage_ItemContainer.h"
+#include "ShaderManager.h"
 
 namespace T3{
 	namespace GUI{
@@ -16,8 +17,13 @@ namespace T3{
 			CB::CRefPtr<CB::Graphic::IDevice>	m_pDevice;
 			CTextRenderer&	m_TextRender;
 
+			CB::CRefPtr<CB::Graphic::IVertexDeclaration>	m_pVertexDeclaration;
+			CB::CRefPtr<CB::Graphic::IShader>				m_pVertexShader;
+			CB::CRefPtr<CB::Graphic::IShader>				m_pFragmentShader;
+			CB::CRefPtr<CB::Graphic::IDeviceState>			m_pBState;
+
 		public:
-			CMain(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextRenderer& TextRenderer);
+			CMain(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextRenderer& TextRenderer, CShaderManager& ShdMng);
 
 			void	PushScreen(CB::CRefPtr<CScreen> pScreen);
 			void	PopScreen();
@@ -30,6 +36,8 @@ namespace T3{
 
 			void	SetUpRender();
 			void	FreeRender();
+
+			void	SetColor(const CB::Math::CColor& Color);
 		};
 	}
 }
