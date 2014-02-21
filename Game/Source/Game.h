@@ -11,7 +11,7 @@
 #include "GameCursor.h"
 #include "Level.h"
 #include "BackgroundGrid.h"
-#include "GUIManager.h"
+#include "GUIMain.h"
 
 #include "TextRenderer.h"
 
@@ -30,7 +30,7 @@ namespace T3{
 
 		CTextureManager	m_TextureManager;
 		CShaderManager	m_ShaderManager;
-		GUI::CManager	m_GUIManager;
+		GUI::CMain		m_GUIMain;
 		CB::CAutoPtr<CGameCursor>		m_pCursor;
 		CB::CAutoPtr<CLevel>			m_pLevel;
 		CB::CAutoPtr<CBGGridModel>		m_pBackGround;

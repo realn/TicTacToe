@@ -10,7 +10,6 @@
 namespace T3{
 	namespace GUI{
 		class CMain :
-			public CB::IRef,
 			private Manage::IItemContainer<CScreen>
 		{
 		private:
@@ -38,6 +37,7 @@ namespace T3{
 			void	FreeRender();
 
 			void	SetColor(const CB::Math::CColor& Color);
+			void	SetProjection(const CB::Math::CMatrix& Matrix);
 		};
 	}
 }

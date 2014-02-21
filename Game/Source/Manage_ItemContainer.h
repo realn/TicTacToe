@@ -31,7 +31,7 @@ namespace T3{
 		IItem<_Parent>::~IItem(){}
 
 		template<typename _Parent>
-		IItem<_Parent>::ParentPtr	IItem<_Parent>::GetParent() const{
+		typename IItem<_Parent>::ParentPtr	IItem<_Parent>::GetParent() const{
 			return this->m_pParent;
 		}
 
@@ -44,6 +44,7 @@ namespace T3{
 
 		protected:
 			CB::Collection::CList<ItemPtr>	m_Items;
+			IItemContainer();
 
 		public:
 			~IItemContainer();
@@ -53,12 +54,14 @@ namespace T3{
 			virtual void	Clear();
 		};
 
+		template<typename _Item>
+		IItemContainer<_Item>::IItemContainer(){}
 
 		template<typename _Item>
 		IItemContainer<_Item>::~IItemContainer(){}
 
 		template<typename _Item>
-		const bool	IItemContainer<_Item>::AddItem(IItemContainer<_Item>::ItemPtr Item){
+		const bool	IItemContainer<_Item>::AddItem(typename IItemContainer<_Item>::ItemPtr Item){
 			if(!CB::Collection::Contains(this->m_Items, Item)){
 				this->m_Items.Add(Item);
 				return true;
@@ -67,7 +70,7 @@ namespace T3{
 		}
 
 		template<typename _Item>
-		const bool	IItemContainer<_Item>::RemoveItem(IItemContainer<_Item>::ItemPtr Item){
+		const bool	IItemContainer<_Item>::RemoveItem(typename IItemContainer<_Item>::ItemPtr Item){
 			uint32 uIndex = 0;
 			if(CB::Collection::TryFind(this->m_Items, Item, uIndex)){
 				this->m_Items.Remove(uIndex);

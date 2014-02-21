@@ -4,6 +4,7 @@ namespace T3{
 	namespace GUI{
 		const CB::CString	GUI_SHADER = L"GUIShader";
 		const CB::CString	SHADER_CONST_COLOR = L"vColor";
+		const CB::CString	SHADER_CONST_PROJ = L"mProj";
 
 		CMain::CMain(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextRenderer& TextRenderer, CShaderManager& ShdMng) :
 			m_pDevice(pDevice),
@@ -77,6 +78,10 @@ namespace T3{
 
 		void	CMain::SetColor(const CB::Math::CColor& Color){
 			this->m_pFragmentShader->SetUniform(SHADER_CONST_COLOR, Color.ToVector4D());
+		}
+
+		void	CMain::SetProjection(const CB::Math::CMatrix& Matrix){
+			this->m_pVertexShader->SetUniform(SHADER_CONST_PROJ, Matrix);
 		}
 	}
 }

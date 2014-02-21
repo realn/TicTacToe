@@ -6,6 +6,8 @@
 #include "Manage_ItemContainer.h"
 
 namespace T3{
+	class CTextRenderer;
+
 	namespace GUI{
 		class CScreen;
 
@@ -25,6 +27,9 @@ namespace T3{
 
 			virtual void	Render() = 0;
 			virtual void	Update(const float32 fTD) = 0;
+
+		protected:
+			CTextRenderer&	GetTR();
 		};
 	}
 }

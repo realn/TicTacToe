@@ -1,6 +1,6 @@
 
-uniform	float4x4	mModelViewProj;
-uniform float		fAlpha;
+uniform	float4x4	mProj;
+uniform float4		vColor;
 //uniform	sampler2D	texBase;
 
 struct	VINPUT{
@@ -25,7 +25,7 @@ struct FOUTPUT{
 VOUTPUT	vmain(VINPUT vinput){
 	VOUTPUT	voutput;
 
-	voutput.vPosition = mul(mModelViewProj, float4(vinput.vPosition, 1.0f));
+	voutput.vPosition = mul(mProj, float4(vinput.vPosition, 1.0f));
 	voutput.vTexCoord = vinput.vTexCoord;
 
 	return voutput;
@@ -35,8 +35,8 @@ FOUTPUT	fmain(FINPUT finput){
 	FOUTPUT foutput;
 
 	//foutput.vColor = tex2D(texBase, finput.vTexCoord);
-	foutput.vColor = float4(0.0f, 0.0f, 0.0f, fAlpha);
-
+	//foutput.vColor = float4(0.0f, 0.0f, 0.0f, fAlpha);
+	foutput.vColor = vColor;
 
 	return foutput;
 }

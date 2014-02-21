@@ -20,10 +20,14 @@ namespace T3{
 			CB::Math::CVector2D	m_vSize;
 
 		public:
-			CScreen(CB::CRefPtr<CMain> pMain, const CB::Math::CVector2D& vSize);
+			CScreen(CMain& pMain, const CB::Math::CVector2D& vSize);
 
 			virtual void	Render();
 			virtual void	Update(const float32 fTD);
+
+			virtual const bool	AddItem(CScreen::ItemPtr pItem) override;
+
+			const CB::Math::CMatrix	GetTransform() const;
 		};
 	}
 }
