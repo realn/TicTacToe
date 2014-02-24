@@ -28,6 +28,8 @@ namespace T3{
 			virtual const bool	AddItem(CScreen::ItemPtr pItem) override;
 
 			const CB::Math::CMatrix	GetTransform() const;
+
+			const CB::Math::CVector2D	GetCursorPos() const;
 		};
 	}
 }

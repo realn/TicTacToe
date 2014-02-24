@@ -4,6 +4,7 @@
 #include <Math_RectangleF.h>
 
 #include "GUIItem.h"
+#include "Linear.h"
 
 namespace T3{
 	namespace GUI{
@@ -12,7 +13,7 @@ namespace T3{
 		{
 		protected:
 			CB::CString	m_strText;
-			CB::Math::CRectangleF32	m_Rect;
+			CLinear	m_ColorValue;
 
 		public:
 			CTextItem(CB::CRefPtr<CScreen> Screen, const CB::CString& strText);

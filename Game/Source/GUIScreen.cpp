@@ -30,11 +30,21 @@ namespace T3{
 				return false;
 			}
 
+			CB::Math::CRectangleF32 Rect;
+			Rect.Position.Set(0.0f, this->m_vSize.Y * 0.1f * (float32)this->m_Items.GetLength());
+			Rect.Size.Set(this->m_vSize.X, this->m_vSize.Y * 0.1f);
+
+			pItem->SetRect(Rect);
+
 			return true;
 		}
 
 		const CB::Math::CMatrix	CScreen::GetTransform() const{
 			return CB::Math::CMatrix::GetOrtho(0.0f, this->m_vSize.X, 0.0f, this->m_vSize.Y, -1.0f, 1.0f);
+		}
+
+		const CB::Math::CVector2D	CScreen::GetCursorPos() const{
+			return this->m_pParent->GetCursorPos() * this->m_vSize;
 		}
 	}
 }

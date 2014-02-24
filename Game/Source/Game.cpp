@@ -81,6 +81,7 @@ namespace T3{
 	void	CGame::EventMouseMove(const CB::Math::CVector2D& Position){
 		this->m_pCursor->SetPos(Position);
 		this->m_pLevel->SetMousePos(Position);
+		this->m_GUIMain.SetCursorPos(Position);
 	}
 
 	void	CGame::EventMouseDown(const CB::Math::CVector2D& Position, const CB::Window::VirtualKey Button){
@@ -100,12 +101,6 @@ namespace T3{
 		this->m_pLevel->Render(pDev);
 		this->m_pCursor->Render(pDev);
 		this->m_GUIMain.Render();
-
-		auto mTransform = CB::Math::CMatrix::GetOrtho(0.0f, 10.0f, 0.0f, 10.0f, -1.0f, 1.0f) * 
-			CB::Math::CMatrix::GetTranslation(0.0f, 0.0f, 0.0f);
-		this->m_Text.SetTransform(mTransform);
-		this->m_Text.SetColor(CB::Math::CColor(0.0f, 0.0f, 0.0f, 1.0f));
-		this->m_Text.Print(L"Marek Mlynarski?!");
 
 		pDev->EndRender();
 	}

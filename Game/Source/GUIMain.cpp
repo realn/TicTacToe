@@ -83,5 +83,13 @@ namespace T3{
 		void	CMain::SetProjection(const CB::Math::CMatrix& Matrix){
 			this->m_pVertexShader->SetUniform(SHADER_CONST_PROJ, Matrix);
 		}
+
+		void	CMain::SetCursorPos(const CB::Math::CVector2D& vPosition){
+			this->m_vCursorPos = vPosition;
+		}
+
+		const CB::Math::CVector2D&	CMain::GetCursorPos() const{
+			return this->m_vCursorPos;
+		}
 	}
 }

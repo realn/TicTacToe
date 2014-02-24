@@ -75,6 +75,9 @@
     <ClCompile Include="Source\GUITextItem.cpp">
       <Filter>Source\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Linear.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -135,6 +138,9 @@
       <Filter>Source\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Manage_ItemContainer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Linear.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

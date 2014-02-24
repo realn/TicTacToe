@@ -15,6 +15,7 @@ namespace T3{
 		private:
 			CB::CRefPtr<CB::Graphic::IDevice>	m_pDevice;
 			CTextRenderer&	m_TextRender;
+			CB::Math::CVector2D	m_vCursorPos;
 
 			CB::CRefPtr<CB::Graphic::IVertexDeclaration>	m_pVertexDeclaration;
 			CB::CRefPtr<CB::Graphic::IShader>				m_pVertexShader;
@@ -38,6 +39,9 @@ namespace T3{
 
 			void	SetColor(const CB::Math::CColor& Color);
 			void	SetProjection(const CB::Math::CMatrix& Matrix);
+			void	SetCursorPos(const CB::Math::CVector2D& vPosition);
+
+			const CB::Math::CVector2D&	GetCursorPos() const;
 		};
 	}
 }
