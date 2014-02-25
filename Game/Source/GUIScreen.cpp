@@ -30,12 +30,6 @@ namespace T3{
 				return false;
 			}
 
-			CB::Math::CRectangleF32 Rect;
-			Rect.Position.Set(0.0f, this->m_vSize.Y * 0.1f * (float32)this->m_Items.GetLength());
-			Rect.Size.Set(this->m_vSize.X, this->m_vSize.Y * 0.1f);
-
-			pItem->SetRect(Rect);
-
 			return true;
 		}
 

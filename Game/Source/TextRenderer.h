@@ -19,12 +19,16 @@ namespace T3{
 		CB::CRefPtr<CB::Graphic::IDeviceState>	m_pBlendState;
 		CB::CRefPtr<CB::Graphic::ITexture2D>	m_pTexture;
 		CB::CAutoPtr<CB::Tools::CTextMeshGenerator>		m_pTextGen;
+		
+		CB::Math::CVector2D	m_vScale;
 
 	public:
 		CTextRenderer(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CShaderManager& ShdMng, const CB::CString& strAssetsDir);
 
 		void	SetTransform(const CB::Math::CMatrix& mTransform);
 		void	SetColor(const CB::Math::CColor& Color);
+		void	SetScale(const CB::Math::CVector2D& vScale);
+		void	SetScale(const float32 fScale);
 		void	Print(const CB::CString& strText);
 
 		void	BeginTextBlock();

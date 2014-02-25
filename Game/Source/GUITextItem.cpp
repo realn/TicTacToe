@@ -23,6 +23,7 @@ namespace T3{
 
 			this->GetTR().SetColor(CB::Math::CColor(this->m_ColorValue.GetValue()));
 			this->GetTR().SetTransform(mMatrix);
+			this->GetTR().SetScale(this->m_Rect.Size.Y);
 			this->GetTR().Print(this->m_strText);
 			this->m_pParent->GetParent()->SetUpRender();
 		}

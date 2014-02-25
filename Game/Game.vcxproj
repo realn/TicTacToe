@@ -91,6 +91,7 @@
     <ClCompile Include="Source\GameEnv.cpp" />
     <ClCompile Include="Source\GUIItem.cpp" />
     <ClCompile Include="Source\GUIMain.cpp" />
+    <ClCompile Include="Source\GUIMenuScreen.cpp" />
     <ClCompile Include="Source\GUIScreen.cpp" />
     <ClCompile Include="Source\GUITextItem.cpp" />
     <ClCompile Include="Source\Level.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Source\GameEnv.h" />
     <ClInclude Include="Source\GUIItem.h" />
     <ClInclude Include="Source\GUIMain.h" />
+    <ClInclude Include="Source\GUIMenuScreen.h" />
     <ClInclude Include="Source\GUIScreen.h" />
     <ClInclude Include="Source\GUITextItem.h" />
     <ClInclude Include="Source\Level.h" />

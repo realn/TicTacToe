@@ -78,6 +78,9 @@
     <ClCompile Include="Source\Linear.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GUIMenuScreen.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="Source\Linear.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIMenuScreen.h">
+      <Filter>Source\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

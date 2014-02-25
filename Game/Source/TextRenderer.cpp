@@ -14,7 +14,8 @@ namespace T3{
 	CTextRenderer::CTextRenderer(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CShaderManager& ShdMng, const CB::CString& strAssetsDIr) :
 		m_pDevice(pDevice),
 		m_pVShader(ShdMng.Load(TEXT_SHADER, CB::Graphic::ShaderType::Vertex)),
-		m_pFShader(ShdMng.Load(TEXT_SHADER, CB::Graphic::ShaderType::Fragment))
+		m_pFShader(ShdMng.Load(TEXT_SHADER, CB::Graphic::ShaderType::Fragment)),
+		m_vScale(1.0f)
 	{
 		auto strPath = CB::IO::Path::Combine(strAssetsDIr, TEXT_FONT);
 		auto pFontStream = CB::IO::File::Open(strPath).Cast<CB::IO::IStream>();
@@ -66,9 +67,17 @@ namespace T3{
 		this->m_pFShader->SetUniform(SHADER_COLOR, Color.ToVector4D());
 	}
 
+	void	CTextRenderer::SetScale(const CB::Math::CVector2D& vScale){
+		this->m_vScale = vScale;
+	}
+
+	void	CTextRenderer::SetScale(const float32 fScale){
+		this->SetScale(CB::Math::CVector2D(fScale));
+	}
+
 	void	CTextRenderer::Print(const CB::CString& strText){
 		CB::Tools::CMeshRawIVT mesh;
-		this->m_pTextGen->Generate(strText, mesh);
+		this->m_pTextGen->Generate(strText, this->m_vScale, mesh);
 
 		this->m_pVBuffer->LoadData(mesh.Vertices);
 		this->m_pTBuffer->LoadData(mesh.TexCoords);

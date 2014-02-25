@@ -6,6 +6,7 @@
 #include <IO_TextReader.h>
 
 #include "GUIScreen.h"
+#include "GUIMenuScreen.h"
 #include "GUITextItem.h"
 
 namespace T3{
@@ -40,10 +41,11 @@ namespace T3{
 		this->m_pBackGround->SetGridPos(CB::Math::CVector3D((this->m_Env.GetAspectRatio() - 1.0f)/2.0f, 0.0f));
 
 		CB::Math::CVector2D guiSize(this->m_Env.GetAspectRatio() * GUI_SCREEN_H, GUI_SCREEN_H);
-		CB::CRefPtr<GUI::CScreen> pScreen = new GUI::CScreen(this->m_GUIMain, guiSize);
-		CB::CRefPtr<GUI::CTextItem> pItem = new GUI::CTextItem(pScreen, L"Text Text");
+		CB::CRefPtr<GUI::CScreen> pScreen = new GUI::CMenuScreen(this->m_GUIMain, guiSize, 20);
 
-		pScreen->AddItem(pItem.Cast<GUI::IItem>());
+		pScreen->AddItem(new GUI::CTextItem(pScreen, L"Menu Item 1"));
+		pScreen->AddItem(new GUI::CTextItem(pScreen, L"Menu Item 2"));
+		pScreen->AddItem(new GUI::CTextItem(pScreen, L"Menu Item 3"));
 		this->m_GUIMain.PushScreen(pScreen);
 	}
 
