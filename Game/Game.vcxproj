@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\BackgroundGrid.cpp" />
+    <ClCompile Include="Source\FullscreenQuad.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameConfig.cpp" />
     <ClCompile Include="Source\GameCursor.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Source\GUIMain.cpp" />
     <ClCompile Include="Source\GUIMenuScreen.cpp" />
     <ClCompile Include="Source\GUIScreen.cpp" />
+    <ClCompile Include="Source\GUITextButton.cpp" />
     <ClCompile Include="Source\GUITextItem.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LevelFieldMesh.cpp" />
@@ -119,12 +121,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\FullscreenQuad.h" />
     <ClInclude Include="Source\BackgroundGrid.h" />
     <ClInclude Include="Source\GameEnv.h" />
+    <ClInclude Include="Source\GUIEvent.h" />
     <ClInclude Include="Source\GUIItem.h" />
     <ClInclude Include="Source\GUIMain.h" />
     <ClInclude Include="Source\GUIMenuScreen.h" />
     <ClInclude Include="Source\GUIScreen.h" />
+    <ClInclude Include="Source\GUITextButton.h" />
     <ClInclude Include="Source\GUITextItem.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\GameCursor.h" />
@@ -152,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BackGroundShader.cg" />
+    <None Include="Assets\BasicColorShader.cg" />
     <None Include="Assets\BasicShader.cg" />
     <None Include="Assets\CursorShader.cg" />
     <None Include="Assets\GridShader.cg" />

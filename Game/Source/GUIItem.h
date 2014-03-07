@@ -5,6 +5,7 @@
 #include <Math_RectangleF.h>
 
 #include "Manage_ItemContainer.h"
+#include "GUIEvent.h"
 
 namespace T3{
 	class CTextRenderer;
@@ -19,18 +20,21 @@ namespace T3{
 
 		class IItem :
 			public CB::IRef,
-			public Manage::IItem<CScreen>
+			public Manage::IContItem<CScreen>
 		{
 		protected:
 			CB::Math::CRectangleF32	m_Rect;
 
 		public:
-			IItem(CB::CRefPtr<CScreen> Screen);
+			IItem();
+			virtual ~IItem();
 
 			virtual const ItemType	GetType() const = 0;
 
 			virtual void	Render() = 0;
 			virtual void	Update(const float32 fTD) = 0;
+
+			virtual void	ProcessEvent(const CEvent& Event);
 
 			virtual void	SetRect(const CB::Math::CRectangleF32& Rect);
 			virtual const CB::Math::CRectangleF32	GetRect() const;

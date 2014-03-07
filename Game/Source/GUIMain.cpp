@@ -10,7 +10,8 @@ namespace T3{
 			m_pDevice(pDevice),
 			m_TextRender(TextRenderer),
 			m_pVertexShader(ShdMng.Load(GUI_SHADER, CB::Graphic::ShaderType::Vertex)),
-			m_pFragmentShader(ShdMng.Load(GUI_SHADER, CB::Graphic::ShaderType::Fragment))
+			m_pFragmentShader(ShdMng.Load(GUI_SHADER, CB::Graphic::ShaderType::Fragment)),
+			m_Background(pDevice, ShdMng)
 		{
 			using namespace CB::Graphic;
 
@@ -26,6 +27,9 @@ namespace T3{
 				CBlendStateDesc desc(true, inst, inst, 0xFF);
 				this->m_pBState = this->m_pDevice->CreateState(desc).Cast<IDeviceState>();
 			}
+		}
+
+		CMain::~CMain(){
 		}
 
 		void	CMain::PushScreen(CB::CRefPtr<CScreen> pScreen){
@@ -47,9 +51,15 @@ namespace T3{
 		}
 
 		void	CMain::Update(const float32 fTD){
-			for(uint32 i = 0; i < this->m_Items.GetLength(); i++){
-				this->m_Items[i]->Update(fTD);
-			}
+			if(this->m_Items.IsEmpty())
+				return;
+
+			this->m_Items.Last()->Update( fTD );
+			//CB::Collection::CList<CB::CRefPtr<CScreen>> screens(this->m_Items);
+
+			//for(uint32 i = 0; i < screens.GetLength(); i++){
+			//	screens[i]->Update(fTD);
+			//}
 		}
 
 		CB::CRefPtr<CB::Graphic::IDevice>	CMain::GetDevice(){
@@ -58,6 +68,10 @@ namespace T3{
 
 		CTextRenderer&	CMain::GetTextRenderer(){
 			return this->m_TextRender;
+		}
+
+		CFullscreenQuad&	CMain::GetBackground(){
+			return this->m_Background;
 		}
 
 		void	CMain::SetUpRender(){
@@ -90,6 +104,17 @@ namespace T3{
 
 		const CB::Math::CVector2D&	CMain::GetCursorPos() const{
 			return this->m_vCursorPos;
+		}
+
+		void	CMain::ProcessEvent(const CEvent& Event){
+			if(Event.Type == EventType::MouseMove){
+				this->SetCursorPos(Event.Position);
+			}
+
+			CB::Collection::CList<CB::CRefPtr<GUI::CScreen>> screens(this->m_Items);
+			for(uint32 i = 0; i < screens.GetLength(); i++){
+				screens[i]->ProcessEvent(Event);
+			}
 		}
 	}
 }

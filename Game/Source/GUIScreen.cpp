@@ -4,7 +4,7 @@
 namespace T3{
 	namespace GUI{
 		CScreen::CScreen(CMain& pMain, const CB::Math::CVector2D& vSize) :
-			Manage::IItem<CMain>(&pMain),
+			Manage::IContItem<CMain>(&pMain),
 			m_vSize(vSize)
 		{
 
@@ -25,8 +25,14 @@ namespace T3{
 			}
 		}
 
+		void	CScreen::ProcessEvent(const CEvent& Event){
+			for(uint32 i = 0; i < this->m_Items.GetLength(); i++){
+				this->m_Items[i]->ProcessEvent(Event);
+			}
+		}
+
 		const bool	CScreen::AddItem(CScreen::ItemPtr pItem){
-			if(!Manage::IItemContainer<GUI::IItem>::AddItem(pItem)){
+			if(!Manage::IContItemContainer<CScreen, GUI::IItem>::AddItem(pItem)){
 				return false;
 			}
 

@@ -5,13 +5,11 @@
 
 namespace T3{
 	namespace GUI{
-		IItem::IItem(CB::CRefPtr<CScreen> pScreen) :
-			Manage::IItem<CScreen>(pScreen)
-		{
-		}
+		IItem::IItem(){}
 
-		CTextRenderer&	IItem::GetTR(){
-			return this->m_pParent->GetParent()->GetTextRenderer();
+		IItem::~IItem(){}
+
+		void	IItem::ProcessEvent(const CEvent& Event){
 		}
 
 		void	IItem::SetRect(const CB::Math::CRectangleF32& Rect){
@@ -20,6 +18,10 @@ namespace T3{
 
 		const CB::Math::CRectangleF32	IItem::GetRect() const{
 			return this->m_Rect;
+		}
+
+		CTextRenderer&	IItem::GetTR(){
+			return this->m_pParent->GetParent()->GetTextRenderer();
 		}
 	}
 }

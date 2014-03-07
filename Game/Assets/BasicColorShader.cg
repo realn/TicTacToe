@@ -1,0 +1,31 @@
+
+uniform float4x4	mTransform;
+uniform float4		vColor;
+
+struct VINPUT{
+	float3	vPosition : POSITION;
+};
+
+struct VOUTPUT{
+	float4	vPosition : POSITION;
+};
+
+struct FINPUT{
+	float4	vPosition;
+};
+
+struct FOUTPUT{
+	float4	vColor : COLOR0;
+};
+
+VOUTPUT	vmain(VINPUT vinput){
+	VOUTPUT	voutput;
+	voutput.vPosition = mul( mTransform, float4( vinput.vPosition, 1.0f ) );
+	return voutput;
+}
+
+FOUTPUT fmain(FINPUT finput){
+	FOUTPUT foutput;
+	foutput.vColor = vColor;
+	return foutput;
+}

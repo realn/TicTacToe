@@ -81,6 +81,12 @@
     <ClCompile Include="Source\GUIMenuScreen.cpp">
       <Filter>Source\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GUITextButton.cpp">
+      <Filter>Source\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FullscreenQuad.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -149,6 +155,15 @@
     <ClInclude Include="Source\GUIMenuScreen.h">
       <Filter>Source\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GUITextButton.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUIEvent.h">
+      <Filter>Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FullscreenQuad.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\pointer.png">
@@ -187,6 +202,9 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="Assets\TextShader.cg">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="Assets\BasicColorShader.cg">
       <Filter>Assets</Filter>
     </None>
   </ItemGroup>

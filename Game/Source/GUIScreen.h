@@ -13,8 +13,8 @@ namespace T3{
 
 		class CScreen : 
 			public CB::IRef,
-			public Manage::IItem<CMain>,
-			public Manage::IItemContainer<IItem>
+			public Manage::IContItem<CMain>,
+			public Manage::IContItemContainer<CScreen, IItem>
 		{
 		protected:
 			CB::Math::CVector2D	m_vSize;
@@ -24,6 +24,8 @@ namespace T3{
 
 			virtual void	Render();
 			virtual void	Update(const float32 fTD);
+
+			virtual void	ProcessEvent(const CEvent& Event);
 
 			virtual const bool	AddItem(CScreen::ItemPtr pItem) override;
 

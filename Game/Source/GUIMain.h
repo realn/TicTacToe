@@ -6,15 +6,19 @@
 #include "TextRenderer.h"
 #include "Manage_ItemContainer.h"
 #include "ShaderManager.h"
+#include "GUIEvent.h"
+#include "FullscreenQuad.h"
 
 namespace T3{
 	namespace GUI{
 		class CMain :
-			private Manage::IItemContainer<CScreen>
+			public Manage::IContItemContainer<CMain, CScreen>
 		{
 		private:
 			CB::CRefPtr<CB::Graphic::IDevice>	m_pDevice;
 			CTextRenderer&	m_TextRender;
+			CFullscreenQuad	m_Background;
+			
 			CB::Math::CVector2D	m_vCursorPos;
 
 			CB::CRefPtr<CB::Graphic::IVertexDeclaration>	m_pVertexDeclaration;
@@ -24,6 +28,7 @@ namespace T3{
 
 		public:
 			CMain(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextRenderer& TextRenderer, CShaderManager& ShdMng);
+			virtual ~CMain();
 
 			void	PushScreen(CB::CRefPtr<CScreen> pScreen);
 			void	PopScreen();
@@ -32,7 +37,8 @@ namespace T3{
 			void	Update(const float32 fTD);
 
 			CB::CRefPtr<CB::Graphic::IDevice>	GetDevice();
-			CTextRenderer&	GetTextRenderer();
+			CTextRenderer&		GetTextRenderer();
+			CFullscreenQuad&	GetBackground();
 
 			void	SetUpRender();
 			void	FreeRender();
@@ -42,6 +48,8 @@ namespace T3{
 			void	SetCursorPos(const CB::Math::CVector2D& vPosition);
 
 			const CB::Math::CVector2D&	GetCursorPos() const;
+
+			void	ProcessEvent(const CEvent& Event);
 		};
 	}
 }

@@ -8,6 +8,7 @@
 #include "GUIScreen.h"
 #include "GUIMenuScreen.h"
 #include "GUITextItem.h"
+#include "GUITextButton.h"
 
 namespace T3{
 	const float32	GUI_SCREEN_H = 10.0f;
@@ -41,12 +42,11 @@ namespace T3{
 		this->m_pBackGround->SetGridPos(CB::Math::CVector3D((this->m_Env.GetAspectRatio() - 1.0f)/2.0f, 0.0f));
 
 		CB::Math::CVector2D guiSize(this->m_Env.GetAspectRatio() * GUI_SCREEN_H, GUI_SCREEN_H);
-		CB::CRefPtr<GUI::CScreen> pScreen = new GUI::CMenuScreen(this->m_GUIMain, guiSize, 20);
+		CB::CRefPtr<GUI::CMenuScreen> pScreen = new GUI::CMenuScreen(this->m_GUIMain, L"Tic Tac Toe", guiSize, 10);
 
-		pScreen->AddItem(new GUI::CTextItem(pScreen, L"Menu Item 1"));
-		pScreen->AddItem(new GUI::CTextItem(pScreen, L"Menu Item 2"));
-		pScreen->AddItem(new GUI::CTextItem(pScreen, L"Menu Item 3"));
-		this->m_GUIMain.PushScreen(pScreen);
+		pScreen->AddMenuButton(L"New Game", CB::Signals::CMethod<CGame>(this, &CGame::MenuChangeToOptions));
+
+		this->m_GUIMain.PushScreen(pScreen.Cast<GUI::CScreen>());
 	}
 
 	CGame::~CGame(){
@@ -54,6 +54,14 @@ namespace T3{
 		pWindow->OnClose.Clear(this);
 		m_Env.OnMouseDown.Clear(this);
 		m_Env.OnMouseMove.Clear(this);
+	}
+
+	void	CGame::MenuChangeToOptions(){
+		CB::Math::CVector2D guiSize(this->m_Env.GetAspectRatio() * GUI_SCREEN_H, GUI_SCREEN_H);
+		CB::CRefPtr<GUI::CMenuScreen> pScreen = new GUI::CMenuScreen(this->m_GUIMain, L"Options", guiSize, 10);
+		pScreen->AddMenuButton(L"Resolution", CB::Signals::CMethod<CGame>(this, &CGame::MenuChangeToOptions));
+
+		this->m_GUIMain.PushScreen(pScreen.Cast<GUI::CScreen>());
 	}
 
 	const GameResult	CGame::MainLoop(){
@@ -84,12 +92,22 @@ namespace T3{
 		this->m_pCursor->SetPos(Position);
 		this->m_pLevel->SetMousePos(Position);
 		this->m_GUIMain.SetCursorPos(Position);
+		
+		GUI::CEvent event;
+		event.Type = GUI::EventType::MouseMove;
+		event.Position = Position;
+		this->m_GUIMain.ProcessEvent(event);
 	}
 
 	void	CGame::EventMouseDown(const CB::Math::CVector2D& Position, const CB::Window::VirtualKey Button){
 		if(Button == CB::Window::VirtualKey::LBUTTON){
 			this->m_pLevel->PutField(Position, m_uField);
 			this->m_uField = this->m_uField == CLevel::FieldType::Cross ? CLevel::FieldType::Circle : CLevel::FieldType::Cross;
+
+			GUI::CEvent event;
+			event.Type = GUI::EventType::MouseClick;
+			event.Key = Button;
+			this->m_GUIMain.ProcessEvent(event);
 		}
 	}
 
@@ -101,8 +119,8 @@ namespace T3{
 
 		//this->m_pBackGround->Render(pDev);
 		this->m_pLevel->Render(pDev);
-		this->m_pCursor->Render(pDev);
 		this->m_GUIMain.Render();
+		this->m_pCursor->Render(pDev);
 
 		pDev->EndRender();
 	}
