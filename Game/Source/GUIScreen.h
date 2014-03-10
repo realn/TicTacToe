@@ -11,6 +11,12 @@ namespace T3{
 	namespace GUI{
 		class CMain;
 
+		enum class TransitionMode{
+			None,
+			Show,
+			Hide,
+		};
+
 		class CScreen : 
 			public CB::IRef,
 			public Manage::IContItem<CMain>,
@@ -29,7 +35,10 @@ namespace T3{
 
 			virtual const bool	AddItem(CScreen::ItemPtr pItem) override;
 
-			const CB::Math::CMatrix	GetTransform() const;
+			virtual void	SetTransitionMode(const TransitionMode uMode);
+
+			virtual const CB::Math::CMatrix	GetTransform() const;
+			virtual const TransitionMode	GetTransitionMode() const;
 
 			const CB::Math::CVector2D	GetCursorPos() const;
 		};

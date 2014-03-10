@@ -46,5 +46,12 @@ namespace T3{
 		const CB::Math::CVector2D	CScreen::GetCursorPos() const{
 			return this->m_pParent->GetCursorPos() * this->m_vSize;
 		}
+
+		void	CScreen::SetTransitionMode(const TransitionMode uMode){
+		}
+
+		const TransitionMode	CScreen::GetTransitionMode() const{
+			return TransitionMode::None;
+		}
 	}
 }

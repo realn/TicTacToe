@@ -44,9 +44,9 @@ namespace T3{
 		CB::Math::CVector2D guiSize(this->m_Env.GetAspectRatio() * GUI_SCREEN_H, GUI_SCREEN_H);
 		CB::CRefPtr<GUI::CMenuScreen> pScreen = new GUI::CMenuScreen(this->m_GUIMain, L"Tic Tac Toe", guiSize, 10);
 
-		pScreen->AddMenuButton(L"New Game", CB::Signals::CMethod<CGame>(this, &CGame::MenuChangeToOptions));
+		pScreen->AddMenuButton(L"Options", CB::Signals::CMethod<CGame>(this, &CGame::MenuChangeToOptions));
 
-		this->m_GUIMain.PushScreen(pScreen.Cast<GUI::CScreen>());
+		this->m_GUIMain.PushScreen(pScreen.Cast<GUI::CScreen>(), true);
 	}
 
 	CGame::~CGame(){
@@ -60,8 +60,13 @@ namespace T3{
 		CB::Math::CVector2D guiSize(this->m_Env.GetAspectRatio() * GUI_SCREEN_H, GUI_SCREEN_H);
 		CB::CRefPtr<GUI::CMenuScreen> pScreen = new GUI::CMenuScreen(this->m_GUIMain, L"Options", guiSize, 10);
 		pScreen->AddMenuButton(L"Resolution", CB::Signals::CMethod<CGame>(this, &CGame::MenuChangeToOptions));
+		pScreen->AddMenuButton(L"Back", CB::Signals::CMethod<CGame>(this, &CGame::MenuBack));
 
-		this->m_GUIMain.PushScreen(pScreen.Cast<GUI::CScreen>());
+		this->m_GUIMain.PushScreen(pScreen.Cast<GUI::CScreen>(), true);
+	}
+
+	void	CGame::MenuBack(){
+		this->m_GUIMain.PopScreen(true);
 	}
 
 	const GameResult	CGame::MainLoop(){

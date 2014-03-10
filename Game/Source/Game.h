@@ -51,6 +51,7 @@ namespace T3{
 		const bool	WindowClose(CB::CRefPtr<CB::Window::IWindow> pWindow);
 
 		void	MenuChangeToOptions();
+		void	MenuBack();
 
 	private:
 		void	Render();

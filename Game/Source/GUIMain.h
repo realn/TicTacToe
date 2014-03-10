@@ -21,6 +21,9 @@ namespace T3{
 			
 			CB::Math::CVector2D	m_vCursorPos;
 
+			CB::CRefPtr<GUI::CScreen>	m_pTransitScreen;
+			TransitionMode				m_uTransitMode;
+
 			CB::CRefPtr<CB::Graphic::IVertexDeclaration>	m_pVertexDeclaration;
 			CB::CRefPtr<CB::Graphic::IShader>				m_pVertexShader;
 			CB::CRefPtr<CB::Graphic::IShader>				m_pFragmentShader;
@@ -30,8 +33,8 @@ namespace T3{
 			CMain(CB::CRefPtr<CB::Graphic::IDevice> pDevice, CTextRenderer& TextRenderer, CShaderManager& ShdMng);
 			virtual ~CMain();
 
-			void	PushScreen(CB::CRefPtr<CScreen> pScreen);
-			void	PopScreen();
+			void	PushScreen(CB::CRefPtr<CScreen> pScreen, const bool bTransition);
+			void	PopScreen(const bool bTransition);
 
 			void	Render();
 			void	Update(const float32 fTD);

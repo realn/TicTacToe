@@ -9,7 +9,9 @@ namespace T3{
 			m_uItemsPerPage(uItemPerPage),
 			m_vPercMargin(0.05f, 0.05f),
 			m_vPercPardding(0.1f, 0.005f),
-			m_fPercTitleSize(0.2f)
+			m_fPercTitleSize(0.2f),
+			m_uTransitionMode(TransitionMode::None),
+			m_Linear(0.0f, 1.0f, 2.0f)
 		{
 			this->m_pTitleItem = new CTextItem( strTitle );
 			CScreen::AddItem(this->m_pTitleItem.Get());
@@ -19,6 +21,29 @@ namespace T3{
 		void	CMenuScreen::Render(){
 			this->m_pParent->GetBackground().Render(CB::Math::CColor(1.0f, 1.0f, 1.0f, 0.5f));
 			CScreen::Render();
+		}
+
+		void	CMenuScreen::Update(const float fTD){
+			switch (this->m_uTransitionMode)
+			{
+			case TransitionMode::Show:
+				this->m_Linear.Decrement( fTD );
+				if(this->m_Linear.IsMin()){
+					this->m_uTransitionMode = TransitionMode::None;
+				}
+				break;
+
+			case TransitionMode::Hide:
+				this->m_Linear.Increment(fTD);
+				if(this->m_Linear.IsMax()){
+					this->m_uTransitionMode = TransitionMode::None;
+				}
+				break;
+
+			default:
+				CScreen::Update(fTD);
+				break;
+			}
 		}
 
 		void	CMenuScreen::SetTitle(const CB::CString& strTitle){
@@ -61,7 +86,43 @@ namespace T3{
 
 				this->m_MenuItemList[uIndex]->SetRect(rect);
 			}
+		}
 
+		void	CMenuScreen::SetTransitionMode(const TransitionMode uMode){
+			this->m_uTransitionMode = uMode;
+			switch (this->m_uTransitionMode)
+			{
+			case TransitionMode::Show:
+				this->m_Linear.Fill();
+				break;
+
+			case TransitionMode::Hide:
+				this->m_Linear.Reset();
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		void	CMenuScreen::ProcessEvent(const CEvent& Event){
+			if(this->m_uTransitionMode != TransitionMode::None)
+				return;
+			CScreen::ProcessEvent(Event);
+		}
+
+		const TransitionMode	CMenuScreen::GetTransitionMode() const{
+			return this->m_uTransitionMode;
+		}
+
+		const CB::Math::CMatrix	CMenuScreen::GetTransform() const{
+			if(this->m_uTransitionMode == TransitionMode::None){
+				return CScreen::GetTransform();
+			}
+			else{
+				auto mMove = CB::Math::CMatrix::GetTranslation(this->m_vSize.X * this->m_Linear.GetValue(), 0.0f, 0.0f);
+				return CScreen::GetTransform() * mMove;
+			}
 		}
 	}
 }

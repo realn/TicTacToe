@@ -11,7 +11,8 @@ namespace T3{
 			m_TextRender(TextRenderer),
 			m_pVertexShader(ShdMng.Load(GUI_SHADER, CB::Graphic::ShaderType::Vertex)),
 			m_pFragmentShader(ShdMng.Load(GUI_SHADER, CB::Graphic::ShaderType::Fragment)),
-			m_Background(pDevice, ShdMng)
+			m_Background(pDevice, ShdMng),
+			m_uTransitMode(TransitionMode::None)
 		{
 			using namespace CB::Graphic;
 
@@ -32,34 +33,99 @@ namespace T3{
 		CMain::~CMain(){
 		}
 
-		void	CMain::PushScreen(CB::CRefPtr<CScreen> pScreen){
-			this->AddItem(pScreen);
+		void	CMain::PushScreen(CB::CRefPtr<CScreen> pScreen, const bool bTransition){
+			if(!bTransition){
+				this->AddItem(pScreen);
+			}
+			else{
+				this->m_pTransitScreen = pScreen;
+				this->m_pTransitScreen->SetTransitionMode(TransitionMode::Show);
+				if(!this->m_Items.IsEmpty()){
+					this->m_Items.Last()->SetTransitionMode(TransitionMode::Hide);
+				}
+				this->m_uTransitMode = TransitionMode::Show;
+			}
 		}
 
-		void	CMain::PopScreen(){
-			this->m_Items.Remove();
+		void	CMain::PopScreen(const bool bTransition){
+			if(!bTransition){
+				this->m_Items.Remove();
+			}
+			else if(!this->m_Items.IsEmpty()){
+				this->m_pTransitScreen = this->m_Items.Remove();
+				this->m_pTransitScreen->SetTransitionMode(TransitionMode::Hide);
+				if(!this->m_Items.IsEmpty()){
+					this->m_Items.Last()->SetTransitionMode(TransitionMode::Show);
+				}
+				this->m_uTransitMode = TransitionMode::Hide;
+			}
+		}
+
+		void	CMain::Update(const float32 fTD){
+			if(this->m_uTransitMode == TransitionMode::Show){
+				if(!this->m_Items.IsEmpty() && this->m_Items.Last()->GetTransitionMode() == TransitionMode::Hide){
+					this->m_Items.Last()->Update(fTD);
+				}
+				else if(this->m_pTransitScreen->GetTransitionMode() == TransitionMode::Show){
+					this->m_pTransitScreen->Update(fTD);
+				}
+				else{
+					this->AddItem(this->m_pTransitScreen);
+					this->m_pTransitScreen.Release();
+					this->m_uTransitMode = TransitionMode::None;
+					this->m_Items.Last()->Update(fTD);
+				}
+			}
+			else if(this->m_uTransitMode == TransitionMode::Hide){
+				if(this->m_pTransitScreen->GetTransitionMode() == TransitionMode::Hide){
+					this->m_pTransitScreen->Update(fTD);
+				}
+				else if(!this->m_Items.IsEmpty() && this->m_Items.Last()->GetTransitionMode() == TransitionMode::Show){
+					this->m_Items.Last()->Update(fTD);
+				}
+				else{
+					this->m_pTransitScreen.Release();
+					this->m_uTransitMode = TransitionMode::None;
+					if(!this->m_Items.IsEmpty()){
+						this->m_Items.Last()->Update(fTD);
+					}
+				}
+			}
+			else{
+				if(this->m_Items.IsEmpty())
+					return;
+
+				this->m_Items.Last()->Update( fTD );
+			}
 		}
 
 		void	CMain::Render(){
 			this->SetUpRender();
 
-			for(uint32 i = 0; i < this->m_Items.GetLength(); i++){
-				this->m_Items[i]->Render();
+			if(this->m_uTransitMode == TransitionMode::Show){
+				if(!this->m_Items.IsEmpty() && this->m_Items.Last()->GetTransitionMode() == TransitionMode::Hide){
+					this->m_Items.Last()->Render();
+				}
+				else{
+					this->m_pTransitScreen->Render();
+				}
 			}
+			else if(this->m_uTransitMode == TransitionMode::Hide){
+				if(this->m_pTransitScreen->GetTransitionMode() == TransitionMode::Hide){
+					this->m_pTransitScreen->Render();
+				}
+				else if(!this->m_Items.IsEmpty()){
+					this->m_Items.Last()->Render();
+				}
+			}
+			else if(!this->m_Items.IsEmpty()){
+				this->m_Items.Last()->Render();
+			}
+			//for(uint32 i = 0; i < this->m_Items.GetLength(); i++){
+			//	this->m_Items[i]->Render();
+			//}
 
 			this->FreeRender();
-		}
-
-		void	CMain::Update(const float32 fTD){
-			if(this->m_Items.IsEmpty())
-				return;
-
-			this->m_Items.Last()->Update( fTD );
-			//CB::Collection::CList<CB::CRefPtr<CScreen>> screens(this->m_Items);
-
-			//for(uint32 i = 0; i < screens.GetLength(); i++){
-			//	screens[i]->Update(fTD);
-			//}
 		}
 
 		CB::CRefPtr<CB::Graphic::IDevice>	CMain::GetDevice(){
