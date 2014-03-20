@@ -1,6 +1,7 @@
 #include "GUIMenuScreen.h"
 #include "GUITextButton.h"
 #include "GUIMain.h"
+#include "GUISelectableItem.h"
 
 namespace T3{
 	namespace GUI{
@@ -19,7 +20,7 @@ namespace T3{
 		}
 
 		void	CMenuScreen::Render(){
-			this->m_pParent->GetBackground().Render(CB::Math::CColor(1.0f, 1.0f, 1.0f, 0.5f));
+			this->m_pParent->GetBackground().Render(CB::Math::CColor(0.0f, 0.0f, 0.0f, 0.5f));
 			CScreen::Render();
 		}
 
@@ -108,6 +109,18 @@ namespace T3{
 		void	CMenuScreen::ProcessEvent(const CEvent& Event){
 			if(this->m_uTransitionMode != TransitionMode::None)
 				return;
+
+			if(Event.Type == EventType::KeyPress){
+				using namespace CB::Window;
+				switch (Event.Key)
+				{
+				case VirtualKey::UP:	MoveUp();	break;
+				case VirtualKey::DOWN:	MoveDown();	break;
+				default:
+					break;
+				}
+			}
+
 			CScreen::ProcessEvent(Event);
 		}
 
@@ -122,6 +135,86 @@ namespace T3{
 			else{
 				auto mMove = CB::Math::CMatrix::GetTranslation(this->m_vSize.X * this->m_Linear.GetValue(), 0.0f, 0.0f);
 				return CScreen::GetTransform() * mMove;
+			}
+		}
+
+		void	CMenuScreen::ClearSelection(){
+			for(uint32 i = 0; i < this->m_MenuItemList.GetLength(); i++){
+				auto pItem = dynamic_cast<ISelectableItem*>(this->m_MenuItemList[i].Get());
+				if(pItem != nullptr){
+					pItem->SetSelected(false);
+				}
+			}
+		}
+
+		const bool	PredSelectable(const CB::CRefPtr<GUI::IItem>& Item){
+			auto pItem = dynamic_cast<ISelectableItem*>(const_cast<GUI::IItem*>(Item.Get()));
+			return pItem != nullptr;
+		}
+
+		CB::CPtr<ISelectableItem>	CMenuScreen::GetFirstSelectable(int32& uOutIndex) const{
+			CB::CRefPtr<GUI::IItem> pItem;
+			uint32 uIndex = 0;
+			if(CB::Collection::TrySearch(this->m_MenuItemList, PredSelectable, pItem, uIndex)){
+				uOutIndex = (int32)uIndex;
+				return dynamic_cast<ISelectableItem*>(pItem.Get());
+			}
+			uOutIndex = -1;
+			return CB::CPtr<ISelectableItem>();
+		}
+
+		CB::CPtr<ISelectableItem>	CMenuScreen::GetLastSelectable(int32& uOutIndex) const{
+			CB::CRefPtr<GUI::IItem> pItem;
+			uint32 uIndex = 0;
+			if(CB::Collection::TrySearchLast(this->m_MenuItemList, PredSelectable, pItem, uIndex)){
+				uOutIndex = (int32)uIndex;
+				return dynamic_cast<ISelectableItem*>(pItem.Get());
+			}
+			uOutIndex = -1;
+			return CB::CPtr<ISelectableItem>();
+		}
+
+		void	CMenuScreen::MoveUp(){
+			this->ClearSelection();
+
+			this->m_iCurItem--;
+
+			if(this->m_iCurItem >= 0){
+				for(uint32 i = (int32)this->m_iCurItem + 1; i > 0; i--){
+					auto pItem = dynamic_cast<ISelectableItem*>(this->m_MenuItemList[i-1].Get());
+					if(pItem != nullptr)
+					{
+						this->m_iCurItem = i - 1;
+						pItem->SetSelected(true);
+						return;
+					}
+				}
+			}
+
+			auto pLastItem = this->GetLastSelectable(this->m_iCurItem);
+			if(pLastItem.IsValid()){
+				pLastItem->SetSelected(true);
+			}
+		}
+
+		void	CMenuScreen::MoveDown(){
+			this->ClearSelection();
+
+			if(this->m_iCurItem >= 0){
+				for(uint32 i = (int32)this->m_iCurItem + 1; i < this->m_MenuItemList.GetLength(); i++){
+					auto pItem = dynamic_cast<ISelectableItem*>(this->m_MenuItemList[i].Get());
+					if(pItem != nullptr)
+					{
+						this->m_iCurItem = i;
+						pItem->SetSelected(true);
+						return;
+					}
+				}
+			}
+
+			auto pFirstItem = this->GetFirstSelectable(this->m_iCurItem);
+			if(pFirstItem.IsValid()){
+				pFirstItem->SetSelected(true);
 			}
 		}
 	}

@@ -121,9 +121,6 @@ namespace T3{
 			else if(!this->m_Items.IsEmpty()){
 				this->m_Items.Last()->Render();
 			}
-			//for(uint32 i = 0; i < this->m_Items.GetLength(); i++){
-			//	this->m_Items[i]->Render();
-			//}
 
 			this->FreeRender();
 		}
@@ -138,6 +135,10 @@ namespace T3{
 
 		CFullscreenQuad&	CMain::GetBackground(){
 			return this->m_Background;
+		}
+
+		const bool	CMain::IsInTransition() const{
+			return this->m_uTransitMode != TransitionMode::None;
 		}
 
 		void	CMain::SetUpRender(){

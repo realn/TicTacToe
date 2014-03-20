@@ -101,6 +101,8 @@
     <ClCompile Include="Source\LevelMesh.cpp" />
     <ClCompile Include="Source\Linear.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\MenuMain.cpp" />
+    <ClCompile Include="Source\MenuPause.cpp" />
     <ClCompile Include="Source\RectMesh.cpp" />
     <ClCompile Include="Source\ShaderManager.cpp" />
     <ClCompile Include="Source\TextRenderer.cpp" />
@@ -129,6 +131,7 @@
     <ClInclude Include="Source\GUIMain.h" />
     <ClInclude Include="Source\GUIMenuScreen.h" />
     <ClInclude Include="Source\GUIScreen.h" />
+    <ClInclude Include="Source\GUISelectableItem.h" />
     <ClInclude Include="Source\GUITextButton.h" />
     <ClInclude Include="Source\GUITextItem.h" />
     <ClInclude Include="Source\Level.h" />
@@ -142,6 +145,8 @@
     <ClInclude Include="Source\LevelMesh.h" />
     <ClInclude Include="Source\Linear.h" />
     <ClInclude Include="Source\Manage_ItemContainer.h" />
+    <ClInclude Include="Source\MenuMain.h" />
+    <ClInclude Include="Source\MenuPause.h" />
     <ClInclude Include="Source\RectMesh.h" />
     <ClInclude Include="Source\ShaderManager.h" />
     <ClInclude Include="Source\TextRenderer.h" />

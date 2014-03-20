@@ -4,6 +4,7 @@
 
 #include "GUIScreen.h"
 #include "GUITextItem.h"
+#include "GUISelectableItem.h"
 
 namespace T3{
 	namespace GUI{
@@ -19,6 +20,7 @@ namespace T3{
 			CB::Collection::CList<CB::CRefPtr<GUI::IItem>>	m_MenuItemList;
 			TransitionMode			m_uTransitionMode;
 			CLinear					m_Linear;
+			int32					m_iCurItem;
 
 		public:
 			CMenuScreen(CMain& Main, const CB::CString& strTitle, const CB::Math::CVector2D& vSize, const uint32 uItemsPerPage);
@@ -37,6 +39,12 @@ namespace T3{
 
 		private:
 			void	RecalcItems();
+			void	ClearSelection();
+			CB::CPtr<ISelectableItem>	GetFirstSelectable(int32& iOutIndex) const;
+			CB::CPtr<ISelectableItem>	GetLastSelectable(int32& iOutIndex) const;
+			void	MoveUp();
+			void	MoveDown();
+			void	EnterSelection();
 		};
 	}
 }

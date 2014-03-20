@@ -19,6 +19,10 @@ namespace T3{
 	enum class GameState{
 		MainMenu,
 		Level,
+		PauseMenu,
+		ReturnToLevel,
+		ReturnToMain,
+		Exit,
 		Shutdown,
 	};
 
@@ -47,14 +51,19 @@ namespace T3{
 
 		void	EventMouseMove(const CB::Math::CVector2D& vPos);
 		void	EventMouseDown(const CB::Math::CVector2D& vPos, const CB::Window::VirtualKey uKey);
+		void	EventKeyDown(const CB::Window::VirtualKey uKey);
 
 		const bool	WindowClose(CB::CRefPtr<CB::Window::IWindow> pWindow);
 
-		void	MenuChangeToOptions();
-		void	MenuBack();
+		void	MenuNewGame();
+		void	MenuExit();
+		void	MenuReturn();
+		void	MenuToMain();
 
 	private:
 		void	Render();
 		void	Update(const float32 fTD);
+
+		const CB::Math::CVector2D	GetGUISize() const;
 	};
 }

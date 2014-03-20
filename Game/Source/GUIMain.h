@@ -42,6 +42,7 @@ namespace T3{
 			CB::CRefPtr<CB::Graphic::IDevice>	GetDevice();
 			CTextRenderer&		GetTextRenderer();
 			CFullscreenQuad&	GetBackground();
+			const bool	IsInTransition() const;
 
 			void	SetUpRender();
 			void	FreeRender();

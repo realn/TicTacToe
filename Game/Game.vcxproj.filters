@@ -19,6 +19,9 @@
     <Filter Include="Assets\Fonts">
       <UniqueIdentifier>{609b2f26-56b1-411f-9c3e-e656c508ed63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game\Menus">
+      <UniqueIdentifier>{b1052317-302f-4181-8d71-292355b20f59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="Source\FullscreenQuad.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuMain.cpp">
+      <Filter>Source\Game\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuPause.cpp">
+      <Filter>Source\Game\Menus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +172,15 @@
     </ClInclude>
     <ClInclude Include="Source\FullscreenQuad.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuMain.h">
+      <Filter>Source\Game\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuPause.h">
+      <Filter>Source\Game\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUISelectableItem.h">
+      <Filter>Source\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
